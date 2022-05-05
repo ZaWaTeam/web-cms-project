@@ -1,0 +1,25 @@
+{
+    "name": "Ip Logger. Console print IP info",
+    "description": "Print entering site clients information. User agent, IP adress and even clients account. It can be displayed on debug console or in log journal on admin panel",
+    "meta": [
+        "IPLOGGER",
+        "Log user Ip",
+        "Debugger",
+        "UserAgentLogger"
+    ],
+    "author_name": "Zahcoder34 CMS",
+    "plugin": {
+        "permissions": [
+            {
+                "identy": "log",
+                "description": "Logging permissions",
+                "child": [
+                    {
+                        "identy": "read",
+                        "description": "Allows to read log"
+                    }
+                ]
+            }
+        ]
+    }
+}
