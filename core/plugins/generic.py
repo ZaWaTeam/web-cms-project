@@ -1,10 +1,37 @@
 from core.configreader import DataBaseConfig
+from core.application import app
+from flask import request
 from core.managers.logging import Log
 
 """
 Initialized plugin. This functionality file will work with them only
 """
 store_config = DataBaseConfig()
+
+
+"""
+* ========== *
+  Decorators
+* ========== *
+"""
+
+
+class Decorators():
+    def user_is_authorized(func):
+        # Decorator for authorized user
+        # When it will be callen, decorator passes new arguments
+
+        # Arguments: user
+        # Argment contains information about user
+        def inner():
+
+            @app.before_request
+            def request_offered():
+                # Starting inner
+                # if request.cookies.get("auth"):
+                func(user="some_user_info", request=request)
+
+        return inner()
 
 
 def template_page_loaded(self):
