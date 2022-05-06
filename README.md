@@ -1,5 +1,4 @@
 ## Project development setup
-
 # Install deps
 `pip install -r requirements.txt`
 
