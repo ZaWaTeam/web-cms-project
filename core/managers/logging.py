@@ -1,12 +1,14 @@
 from datetime import datetime
 from rich.traceback import install
 from rich import print as console_output
+from rich.console import Console
 from core.managers.exceptions import LogTypeValueError
 
 
 class LoggingManager():
     def __init__(self) -> None:
-        install()
+        console = Console()
+        install(console=console, show_locals=True)
 
     def use_log(self, path, mode):
         pass
