@@ -7,4 +7,4 @@
 
 - for windows `py main.py` or `python main.py`
 
-### Project in development, so debug mode active
+### Project in development, so debug mode is active
