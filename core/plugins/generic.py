@@ -28,8 +28,8 @@ class Decorators():
             @app.before_request
             def request_offered():
                 # Starting inner
-                # if request.cookies.get("auth"):
-                func(user="some_user_info", request=request)
+                if request.cookies.get("auth"):
+                    func(user=request)
 
         return inner()
 
