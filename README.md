@@ -1,15 +1,10 @@
 ## Project development setup
-
-first steps
-
-1.
+# Install deps
 `pip install -r requirements.txt`
 
-2.
-for mac:
-`python3 main.py` - start web server
+# Start Webserver
+- for mac/linux: `python3 main.py`
 
-for widows
-`py main.py` or `python main.py` - start web server
+- for windows `py main.py` or `python main.py`
 
 ### Project in development, so debug mode active
