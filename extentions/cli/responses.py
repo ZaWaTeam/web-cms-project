@@ -80,6 +80,21 @@ class CLIResponses():
         except Exception:
             Log(f"Configuration named {name} not exists!", 2)
 
+    def delete_config_response(self, name: str):
+        """
+        Delete an existing config
+        ---
+
+        - name: str - Name of existing config
+        """
+        configuration = self.config
+
+        try:
+            configuration.erase_config(name)
+
+        except Exception:
+            Log(f"Configuration named {name} not exists!", 2)
+
     class Plugins():
         def list():
             # Main declarations

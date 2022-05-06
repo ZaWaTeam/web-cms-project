@@ -30,6 +30,11 @@ def writeconfig(name: str, value: str):
     responses.write_config_response(name, value)
 
 
+@app.command()
+def deleteconfig(name: str):
+    responses.delete_config_response(name=name)
+
+
 """
 Plugins
 """
