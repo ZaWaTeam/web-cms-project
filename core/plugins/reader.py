@@ -32,4 +32,18 @@ class PluginReader():
 
             return manifest_converted
 
+        # TODO: Add exception, I was too lazy
         raise ValueError
+
+    def read_permissions(self, plugin_name: str):
+        """
+        Read permission part of plugin manifest
+        """
+        # Read plugin
+        plugin_manifest = self.read_plugin(plugin_name)
+
+        if not plugin_manifest.permissions:
+            # TODO: Create exception. I was too lazy
+            raise NameError
+
+        return plugin_manifest.permissions
