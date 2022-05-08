@@ -17,7 +17,7 @@ store_config = DataBaseConfig()
 
 
 class Decorators():
-    def user_is_authorized(func):
+    def user_is_authorized(self, func):
         # Decorator for authorized user
         # When it will be callen, decorator passes new arguments
 
@@ -33,7 +33,7 @@ class Decorators():
 
         return inner()
 
-    def on_request(func):
+    def on_request(self, func):
         """
         Decorator on request will be callen when site visitor or client makes request to server
         when client enters site. This decorator will be triggered.
@@ -76,57 +76,57 @@ class Debug():
         - `Debug.error(output (string))`: Error log. Prefix `[error]: log`. Colors `Red`
         - `Debug.success(output (string))`: Success log. Prefix `[success]: log`. Colors `Lime`
     """
-    def log(output: str):
+    def log(self, output: str):
         return Log(output, 0)
 
-    def warning(output: str):
+    def warning(self, output: str):
         return Log(output, 1)
 
-    def error(output: str):
+    def error(self, output: str):
         return Log(output, 2)
 
-    def success(output: str):
+    def success(self, output: str):
         return Log(output, 3)
 
 
 # Editables
 class Editables():
-    def create_editable(name, value, index):
+    def create_editable(self, name, value, index):
         pass
 
-    def edit_editable(name, value, index):
+    def edit_editable(self, name, value, index):
         pass
 
-    def delete_editable(name):
+    def delete_editable(self, name):
         pass
 
-    def get_editable(name):
+    def get_editable(self, name):
         pass
 
 
 # File manager
 class FileManager():
-    def create_file(path: str, name: str, extention: str, content):
+    def create_file(self, path: str, name: str, extention: str, content):
         pass
 
-    def write_file(path: str, content, new_name: str = None):
+    def write_file(self, path: str, content, new_name: str = None):
         pass
 
-    def delete_file(path: str):
+    def delete_file(self, path: str):
         pass
 
-    def create_dir(path: str, dirname: str):
+    def create_dir(self, path: str, dirname: str):
         pass
 
-    def edit_dir_name(path: str, new_dirname: str):
+    def edit_dir_name(self, path: str, new_dirname: str):
         pass
 
-    def delete_dir(path: str):
+    def delete_dir(self, path: str):
         pass
 
 # Service
 
 
 class Service():
-    def die(exception):
+    def die(self, exception):
         pass
