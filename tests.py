@@ -1,11 +1,7 @@
 import os
 import sys
-import time
 import unittest
 from subprocess import Popen, PIPE
-
-from core.database.models.main import Configuration
-
 with open('config.ini', 'w+') as f:
     f.write('''[DATABASE]
 Driver = Sqlite
@@ -13,6 +9,7 @@ Path = subconf.sqlite3
 
 [DEVELOPMENT]
 Debug = on''')
+from core.database.models.main import Configuration
 from core.configreader import DataBaseConfig
 
 
