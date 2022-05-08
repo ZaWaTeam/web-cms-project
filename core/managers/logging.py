@@ -12,7 +12,7 @@ class LoggingManager:
 
     def __init__(self) -> None:
         console = Console(log_time_format="%a, %d %b %Y %H:%M:%S")
-        install(console=console, show_locals=True)
+        install(console=console, show_locals=True, width=110)
 
     def use_log(self, path, mode):
         pass
