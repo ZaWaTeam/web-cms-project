@@ -24,13 +24,14 @@ class CLIResponses():
 
     def main_response(self):
         # Art logo
-        art_str = "[red]  ____       __               __        ________   _______  _______ \n"\
-            "[red] /_  / ___ _/ /  _______  ___/ /__ ____|_  / / /  / ___/  |/  / __/ \n" \
-            "[red]  / /_/ _ `/ _ \/ __/ _ \/ _  / -_) __//_ <_  _/ / /__/ /|_/ /\ \   \n" \
-            "[red] /___/\_,_/_//_/\__/\___/\_,_/\__/_/ /____//_/   \___/_/  /_/___/   \n"
+        art_str = "[red] _       ____________     ________  ________\n"\
+            "[red]| |     / / ____/ __ )   / ____/  |/  / ___/\n" \
+            "[red]| | /| / / __/ / __  |  / /   / /|_/ /\__ \ \n" \
+            "[red]| |/ |/ / /___/ /_/ /  / /___/ /  / /___/ / \n" \
+            "[red]|__/|__/_____/_____/   \____/_/  /_//____/  \n"
 
-        print(Panel("[green] Zahcoder34 CMS Launching system... [/green] \n" + art_str,
-                    title="[bold cyan] Zahcoder34 CMS [/bold cyan]", subtitle="[bold cyan] V 1.0.0 [/bold cyan]"))
+        print(Panel("[green] Web CMS Launching system... [/green] \n" + art_str,
+                    title="[bold cyan] Web CMS [/bold cyan]", subtitle="[bold cyan] V 1.0.0 [/bold cyan]"))
 
     def get_configs_response(self, limit: int):
         # Define configs

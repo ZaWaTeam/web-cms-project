@@ -46,4 +46,4 @@ class PluginReader():
             # TODO: Create exception. I was too lazy
             raise NameError
 
-        return plugin_manifest.permissions
+        return plugin_manifest.plugin.permissions
