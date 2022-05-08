@@ -61,6 +61,7 @@ class CLIResponses():
 
         try:
             configuration.create_config(name, value)
+            Log(f"Configuration [bold]{name}[/bold] created successfully with value [italic]{value}[/italic]", 3)
 
         except Exception:
             Log(f"Configuration named {name} already exists!", 2)
@@ -93,6 +94,7 @@ class CLIResponses():
 
         try:
             configuration.erase_config(name)
+            Log(f"Successfully deleted configuration [bold]{name}[/bold]", 3)
 
         except Exception:
             Log(f"Configuration named {name} not exists!", 2)

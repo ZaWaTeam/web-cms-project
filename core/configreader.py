@@ -141,7 +141,10 @@ class DataBaseConfig():
         """
         self.exists_exception(config_name=config_name, mirror=True)
 
-        query = db.Configuration.delete().where(db.Configuration.name == config_name)
+        query = db.Configuration.delete().where(
+            db.Configuration.name == config_name)
+
+        query.execute()
 
         return query
 
