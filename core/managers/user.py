@@ -20,7 +20,6 @@ class UserManagement:
         args (Optional):
             - `**kwargs`: More information field.
         """
-        pass
 
     def create_super_user(self, username: str, email: str, password: str, **kwargs):
         """
