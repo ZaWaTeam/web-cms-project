@@ -8,7 +8,7 @@ class DataBaseConfig():
         pass
 
     # Create new configuration
-    def create_config(self, config_name: str, value: str):
+    def create_config(self, config_name: str, value: str, mode: str = None):
         """
         Create new config stored in database
         ------------------------------------
@@ -18,7 +18,10 @@ class DataBaseConfig():
         - value: str - Value of configuration
 
         """
-        self.exists_exception(config_name=config_name, mirror=False)
+
+        if mode != "tf":
+            self.exists_exception(config_name=config_name, mirror=False)
+
         query = db.Configuration.create(name=config_name, value=value)
 
         return query
