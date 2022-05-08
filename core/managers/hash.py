@@ -10,4 +10,3 @@ class Hash:
     def check(self, password, hash):
         result = bcrypt.checkpw(password.encode('ascii'), hash)
         return result
-pass
