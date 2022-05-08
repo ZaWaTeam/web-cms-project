@@ -33,6 +33,23 @@ class Decorators():
 
         return inner()
 
+    def on_request(func):
+        """
+        Decorator on request will be callen when site visitor or client makes request to server
+        when client enters site. This decorator will be triggered.
+
+        It passes some arguments:
+        `request: namedtuple` - request information
+        """
+        def inner():
+
+            @app.before_request
+            def request_offered():
+                # Starting request inner
+                func(request)
+
+        return inner()
+
 
 def template_page_loaded(self):
     return True

@@ -11,14 +11,8 @@
     "plugin": {
         "permissions": [
             {
-                "identy": "log",
-                "description": "Logging permissions",
-                "child": [
-                    {
-                        "identy": "read",
-                        "description": "Allows to read log"
-                    }
-                ]
+                "identy": "log.read",
+                "description": "Allows to read log"
             }
         ]
     }

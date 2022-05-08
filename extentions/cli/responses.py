@@ -10,6 +10,7 @@ from rich.console import Console
 # Core
 from core.configreader import DataBaseConfig
 from core.managers.logging import Log
+from core.plugins.reader import PluginReader
 # Extentions
 from extentions.cli.helpers import find_filter
 
@@ -60,6 +61,7 @@ class CLIResponses():
 
         try:
             configuration.create_config(name, value)
+            Log(f"Configuration [bold]{name}[/bold] created successfully with value [italic]{value}[/italic]", 3)
 
         except Exception:
             Log(f"Configuration named {name} already exists!", 2)
@@ -92,6 +94,7 @@ class CLIResponses():
 
         try:
             configuration.erase_config(name)
+            Log(f"Successfully deleted configuration [bold]{name}[/bold]", 3)
 
         except Exception:
             Log(f"Configuration named {name} not exists!", 2)
@@ -142,3 +145,24 @@ class CLIResponses():
                     console.print_exception(show_locals=False)
 
             return Log(f"Plugin {name} not found in \"content/plugins\"!", 2)
+
+        def read_information(plugin: str):
+            # Initialize plugin reader
+            reader = PluginReader()
+
+            # Read manifest.json of plugin
+            read_plugin = reader.read_plugin(plugin)
+
+            table = Table(title=f"Information about plugin {plugin}")
+
+            # Adding columns
+            table.add_column("Display Name", style="green")
+            table.add_column("Description", style="yellow")
+            table.add_column("Keywords", style="cyan")
+
+            # Adding rows
+            table.add_row(read_plugin.name, read_plugin.description,
+                          ",".join(read_plugin.meta))
+
+            print(table)
+            return table

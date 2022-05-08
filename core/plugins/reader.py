@@ -25,7 +25,9 @@ class PluginReader():
         # If plugin has manifest
         if isfile(manifest):
             # Get data inside manifest.json and parse it
-            manifest_data = json.load(manifest)
+            read_manifest = open(manifest)
+
+            manifest_data = json.load(read_manifest)
 
             manifest_converted = namedtuple(
                 "ManifestData", manifest_data.keys())(*manifest_data.values())
