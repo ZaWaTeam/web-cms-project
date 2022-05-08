@@ -12,6 +12,11 @@ class Plugin(PluginGeneric):
     def on_ready(self):
         generic.Debug.success("Plugin IPLOGGER successfully activated!")
 
+    @generic.Decorators.on_request
+    def show_ip(request):
+        generic.Debug.success(
+            f"- Request from ip adress - {request.remote_addr}")
+
     # This function will be callen when administrator from admin panel disables plugin
 
     def on_disable(self):

@@ -1,6 +1,6 @@
 class UserManagement:
     """
-    ##User Manager class
+    ## User Manager class
 
     Important core part function. Which adds user account feature and allows to manage with them
     It will work with permissions manager and group manager.
