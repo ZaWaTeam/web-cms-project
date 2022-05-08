@@ -4,6 +4,8 @@ import time
 import unittest
 from subprocess import Popen, PIPE
 
+from core.database.models.main import Configuration
+
 with open('config.ini', 'w+') as f:
     f.write('''[DATABASE]
 Driver = Sqlite
@@ -36,13 +38,13 @@ class TestingCMS(unittest.TestCase):
         plugin_config = database_config.create_and_parse_config(
             "active_plugins", [])
 
-        self.assertFalse(
-            plugin_config, msg="Failed to create plugin configuration")
+        self.assertIsInstance(
+            plugin_config, Configuration, msg="Failed to create plugin configuration")
         template_config = database_config.create_config(
             "active_template", "test")
 
-        self.assertFalse(
-            template_config, msg="Failed to create template configuration")
+        self.assertIsInstance(
+            template_config, Configuration, msg="Failed to create template configuration")
         # catch_output("manager.py", ['createconfig', 'active_plugins', '[]'])
         # TODO: проверка на то что всё запустилось
 
