@@ -59,3 +59,8 @@ def plugindebug(name: str):
             sleep(0.5)
 
             raise typer.Abort()
+
+
+@app.command()
+def readplugin(plugin: str):
+    plugin = responses.Plugins.read_information(plugin)

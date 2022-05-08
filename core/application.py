@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Blueprint, Flask, request
 from defines import BASE_DIR
 import importlib
 from core.managers.theme import ThemeManager
@@ -11,7 +11,14 @@ config = DataBaseConfig()
 main_template = config.get_config("active_template")
 
 app = Flask(__name__, template_folder=f"{BASE_DIR}/content/theme/{main_template}",
-            static_folder="{BASE_DIR}/content/theme")
+            static_folder=f"{BASE_DIR}/content/theme")
+
+# Admin blueprint
+admin = Blueprint(
+    __name__, template_folder=f"{BASE_DIR}/core/admin/template", static_folder=f"{BASE_DIR}")
+
+# Registering admin blueprint
+app.register_blueprint(admin)
 
 
 class Application():

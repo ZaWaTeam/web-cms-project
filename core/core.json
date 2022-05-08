@@ -1,0 +1,16 @@
+{
+    "application": "WebCms",
+    "version": "1.0.0",
+    "permissions": [
+        {
+            "identy": "webcms",
+            "description": "Main Web CMS permission",
+            "child": [
+                {
+                    "identy": "panel",
+                    "description": "Allows to login to panel"
+                }
+            ]
+        }
+    ]
+}
