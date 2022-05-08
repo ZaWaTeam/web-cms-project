@@ -3,6 +3,14 @@ import sys
 import time
 import unittest
 from subprocess import Popen, PIPE
+
+with open('config.ini', 'w+') as f:
+    f.write('''[DATABASE]
+Driver = Sqlite
+Path = subconf.sqlite3
+
+[DEVELOPMENT]
+Debug = on''')
 from core.configreader import DataBaseConfig
 
 
@@ -16,16 +24,6 @@ def catch_output(py_file: str, args: list):
 
 class TestingCMS(unittest.TestCase):
     def test_basic(self):
-        # ТЕСТ СОЗДАН ДЛЯ МАШИНЫ ГИТХАБА ГДЕ ./crashreports ПУСТ
-        f = open('config.ini', 'w+')
-        f.write(
-            '''[DATABASE]
-Driver = Sqlite
-Path = subconf.sqlite3
-
-[DEVELOPMENT]
-Debug = on''')
-        f.close()
         os.system(f'"{sys.executable}" report.py -')
         self.assertEqual(1, len(os.listdir('./crashreports')),
                          msg=f"There is {len(os.listdir('./crashreports'))} crashreports instead of 1")
