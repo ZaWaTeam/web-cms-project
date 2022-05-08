@@ -25,5 +25,3 @@ class Hash:
         result = bcrypt.checkpw(password.encode('ascii'), hash)
         return result
 
-
-pass
