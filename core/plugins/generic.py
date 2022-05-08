@@ -33,7 +33,7 @@ class Decorators():
 
         return inner()
 
-    def on_request(self, func):
+    def on_request(func):
         """
         Decorator on request will be callen when site visitor or client makes request to server
         when client enters site. This decorator will be triggered.
