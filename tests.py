@@ -29,7 +29,7 @@ Debug = on''')
         self.assertEqual(1, len(os.listdir('./crashreports')),
                          msg=f"There is {len(os.listdir('./crashreports'))} crashreports instead of 1")
         out = catch_output("manager.py", ['createconfig', 'active_template', 'test'])
-        self.assertFalse(out.replace('\x1b[0m', ''), msg="error: " + out.replace('\x1b[0m', ''))
+        self.assertIn('success', out.replace('\x1b[0m', ''), msg="error: " + out.replace('\x1b[0m', ''))
         catch_output("manager.py", ['createconfig', 'active_plugins', '[]'])
         # TODO: проверка на то что всё запустилось
 
