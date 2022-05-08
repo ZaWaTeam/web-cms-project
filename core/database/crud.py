@@ -1,4 +1,4 @@
-from core.database.models.main import Editables
+from core.database.models.main import Editables, Groups, UserModel
 from .models import *
 import json
 
@@ -6,6 +6,34 @@ import json
 class DatabaseOperations():
     def __init__(self) -> None:
         pass
+
+    class UserCrud():
+        """
+        User CRUD operations
+        """
+        @classmethod
+        def user_create(cls, username: str, email: str, password: str, group):
+            """
+            Create & write user to database
+            """
+            group_inst = cls.group_get_create(group)
+
+            query = UserModel.create(
+                username=username, email=email, password=password, group=group_inst.id)
+
+            return query
+
+        """
+        Groups
+        """
+        @classmethod
+        def group_get_create(cls, group):
+            """
+            Gets group by name or create
+            """
+            query = Groups.get_or_create(name=group)
+
+            return query
 
     class Editables():
         """
