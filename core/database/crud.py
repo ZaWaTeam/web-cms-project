@@ -33,6 +33,18 @@ class DatabaseOperations():
 
             return query
 
+        @classmethod
+        def user_get_permission(cls, username: str, permission: str):
+            """
+            Get users permission
+            """
+            user = cls.user_get(username)
+
+            query = Permissions.get_or_none(
+                Permissions.permission == permission and Permissions.user_id == user.id)
+
+            return query
+
         """
         Groups
         """
@@ -41,9 +53,19 @@ class DatabaseOperations():
             """
             Gets group by name or create
             """
-            query = Groups.get(name=group)
+            query = Groups.get_or_none(Groups.name == group)
 
             return query
+
+        @classmethod
+        def group_get_permission(cls, group_name: str, permission: str):
+            """
+            Get group's permission
+            """
+            group = cls.group_get(group_name)
+
+            query = Permissions.get_or_none(
+                Permissions.group_id == group.id and Permissions.permission == permission)
 
         """
         Permissions
@@ -115,7 +137,7 @@ class DatabaseOperations():
             if index > 0 and index < 3:
                 value = json.dumps(value)
 
-            query = Editables.get_or_none(name)
+            query = Editables.get_or_none(Editables.name == name)
 
             if not query:
                 return False
