@@ -42,10 +42,10 @@ class UserModel(pw.Model):
     WebCms User Model
     """
     id = pw.AutoField()
-    username = pw.CharField(max_length=90)
+    username = pw.CharField(max_length=90, unique=True)
     email = pw.CharField(max_length=90)
     password = pw.TextField()
-    group = pw.ForeignKeyField(model=Groups, on_delete="CASCADE")
+    group = pw.ForeignKeyField(model=Groups, null=True, on_delete="CASCADE")
 
     class Meta:
         database = CpDb
@@ -57,7 +57,8 @@ class Permissions(pw.Model):
     """
     id = pw.AutoField()
     permission = pw.CharField(max_length=200)
-    group = pw.ForeignKeyField(Groups)
+    group = pw.ForeignKeyField(Groups, on_delete="CASCADE", null=True)
+    user = pw.ForeignKeyField(UserModel, on_delete="CASCADE", null=True)
 
     class Meta:
         database = CpDb

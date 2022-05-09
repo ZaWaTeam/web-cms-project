@@ -1,4 +1,5 @@
-from core.database.models.main import Editables, Groups, UserModel
+from core.database.models.main import Editables, Groups, Permissions, UserModel
+from core.managers.exceptions import PermissionFollowIndexException
 from .models import *
 import json
 
@@ -19,7 +20,16 @@ class DatabaseOperations():
             group_inst = cls.group_get_create(group)
 
             query = UserModel.create(
-                username=username, email=email, password=password, group_id=1)
+                username=username, email=email, password=password, group_id=group_inst.id)
+
+            return query
+
+        @classmethod
+        def user_get(cls, username: str):
+            """
+            Gets user by username
+            """
+            query = UserModel.get_or_none(UserModel.username == username)
 
             return query
 
@@ -27,13 +37,42 @@ class DatabaseOperations():
         Groups
         """
         @classmethod
-        def group_get_or_default(cls, group):
+        def group_get(cls, group):
             """
             Gets group by name or create
             """
-            query = Groups.get_or_create(name=group)
+            query = Groups.get(name=group)
 
             return query
+
+        """
+        Permissions
+        """
+        @classmethod
+        def create_permission(cls, permission: str, group_name: str = None, user_name: str = None):
+            """
+            Creates permission
+            """
+            if group_name == None and user_name == None:
+                raise PermissionFollowIndexException(permission)
+
+            elif group_name == None:
+                # Define it to user
+                user = cls.user_get(user_name)
+                query = Permissions.create(
+                    permission=permission, user_id=user.id)
+
+                return query
+
+            elif user_name == None:
+                # Define it to group
+                group = cls.group_get(group_name)
+                query = Permissions.create(
+                    permission=permission, group_id=group.id)
+
+                return query
+
+            return None
 
     class Editables():
         """
