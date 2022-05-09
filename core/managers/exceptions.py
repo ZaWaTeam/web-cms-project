@@ -27,3 +27,19 @@ class PermissionFollowIndexException(Exception):
 
     def __str__(self) -> str:
         return f"You trying to create permission {self.permission} without indexing it to group or user!"
+
+
+class PermissionNotDefinedInSystem(Exception):
+    def __init__(self, permission: str) -> None:
+        self.permission = permission
+
+    def __str__(self) -> str:
+        return f"Failed to define permission {self.permission}. Are you sure that this is registered permission?"
+
+
+class CoreHasDamage(Exception):
+    def __init__(self, damage: str) -> None:
+        self.damage = damage
+
+    def __str__(self) -> str:
+        return f"Web Cms core had damages and errors! {self.damage}"

@@ -1,5 +1,7 @@
 from core.managers.hash import Hash
 from core.database.crud import DatabaseOperations
+from core.managers.logging import Log
+from core.managers.permissions import PermissionsManagement
 
 
 class UserManagement:
@@ -13,8 +15,9 @@ class UserManagement:
     def __init__(self) -> None:
         self.password_hash = Hash()
         self.crud = DatabaseOperations()
+        self.permission_manager = PermissionsManagement()
 
-    def create_user(self, username: str, email: str, password: str, **kwargs):
+    def create_user(self, username: str, email: str, password: str, group: str = None, **kwargs):
         """
         ## Create user account
 
@@ -30,26 +33,36 @@ class UserManagement:
         """
         hash_password = self.password_hash.crypt(password=password)
         create_user = self.crud.UserCrud.user_create(
-            username=username, email=email, password=hash_password, group="Default")
+            username=username, email=email, password=hash_password, group=group)
 
         return create_user
 
-    @classmethod
-    def create_super_user(cls, username: str, email: str, password: str, **kwargs):
+    def create_super_user(self, username: str, email: str, password: str, **kwargs):
         """
         ## Create super user
         """
-        pass
+        new_user = self.create_user(
+            username=username, email=email, password=password)
 
-    @classmethod
-    def authorize_user(cls, required_field: str, password: str):
+        if not new_user:
+            Log("Failed to create new super user", 2)
+            return None
+
+        # Other code, else condition
+        create_permission = self.permission_manager.create_permission(
+            "*", user=username)
+
+        if create_permission:
+            Log("Successfully created new super user!", 3)
+            return new_user
+
+    def authorize_user(self, required_field: str, password: str):
         """
         Authenticate user
         """
         pass
 
-    @classmethod
-    def is_authenticated(cls):
+    def is_authenticated(self):
         """
         If user is authenticated
         """

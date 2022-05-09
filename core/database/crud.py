@@ -13,14 +13,18 @@ class DatabaseOperations():
         User CRUD operations
         """
         @classmethod
-        def user_create(cls, username: str, email: str, password: str, group):
+        def user_create(cls, username: str, email: str, password: str, group: str):
             """
             Create & write user to database
             """
-            group_inst = cls.group_get_create(group)
+            if group == None:
+                group_id = None
+
+            else:
+                group_id = cls.group_get(group).id
 
             query = UserModel.create(
-                username=username, email=email, password=password, group_id=group_inst.id)
+                username=username, email=email, password=password, group_id=group_id)
 
             return query
 

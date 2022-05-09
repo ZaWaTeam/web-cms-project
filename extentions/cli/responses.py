@@ -176,3 +176,12 @@ class CLIResponses():
             create_user = user_manager.create_user(username, email, password)
 
             return create_user
+
+        def create_super_user(username: str, email: str, password: str):
+            # Initialize user management
+            user_manager = UserManagement()
+
+            create_user = user_manager.create_super_user(
+                username, email, password)
+
+            return create_user

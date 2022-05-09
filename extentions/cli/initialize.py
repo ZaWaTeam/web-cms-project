@@ -81,3 +81,16 @@ def createuser(username: str, email: str, password: str):
 
     except Exception as e:
         Log(f"Failed to create user {username}, due to {e}", 2)
+
+
+@app.command()
+def createsuperuser(username: str, email: str, password: str):
+    try:
+        create_user = responses.User.create_super_user(
+            username, email, password)
+
+        if create_user:
+            Log(f"User {username} created successfully!", 3)
+
+    except Exception as e:
+        Log(f"Failed to create user {username}, due to {e}", 2)

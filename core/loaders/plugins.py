@@ -30,8 +30,6 @@ class PluginLoader():
         database = self.__db
 
         database_active_plugins = self.__db.get_parsed_config("active_plugins")
-        directory_active_plugins = self.__plugins
-        changed_active_plugins = []
 
         # Check loop
         for index, d in enumerate(database_active_plugins):
@@ -137,5 +135,21 @@ class PluginLoader():
         load_plugins = self.__start_plugins()
 
         return True
+
+    def get_active_plugins(self):
+        # Read all active plugins
+        database_active_plugins = self.__db.get_parsed_config("active_plugins")
+        active_plugins = []
+
+        # Check loop
+        for index, d in enumerate(database_active_plugins):
+            if self.__dict_finder(self.__plugins, "name", d["name"]) == False:
+                del database_active_plugins[index]
+                self.__changed_database_plugins(database_active_plugins)
+
+            else:
+                active_plugins.append(d["name"])
+
+        return active_plugins
 
     # def call_override(self, function_name: str, **arguments):

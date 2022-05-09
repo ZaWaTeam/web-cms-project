@@ -25,7 +25,7 @@ class PluginReader():
         # If plugin has manifest
         if isfile(manifest):
             # Get data inside manifest.json and parse it
-            read_manifest = open(manifest)
+            read_manifest = open(manifest, "r")
 
             manifest_data = json.load(read_manifest)
 
@@ -44,8 +44,8 @@ class PluginReader():
         # Read plugin
         plugin_manifest = self.read_plugin(plugin_name)
 
-        if not plugin_manifest.permissions:
+        if not plugin_manifest.plugin.permissions:
             # TODO: Create exception. I was too lazy
-            raise NameError
+            return False
 
         return plugin_manifest.plugin.permissions

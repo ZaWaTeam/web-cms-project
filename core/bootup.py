@@ -1,6 +1,7 @@
 from core.application import Application, app
 from core.managers.logging import LoggingManager, Log
 from core.loaders.plugins import PluginLoader
+from core.loaders.permissions import PermissionsLoader
 
 from core.database.connect import CpDb
 from extentions.cli.responses import CLIResponses
@@ -18,6 +19,9 @@ def boot_up():
     Log("Initializing routers...", 0)
 
     # Initialize
+    permissions = PermissionsLoader()
+    permissions.load_permissions()
+
     plugins = PluginLoader()
     application = Application()
 
