@@ -67,6 +67,8 @@ class DatabaseOperations():
             query = Permissions.get_or_none(
                 Permissions.group_id == group.id and Permissions.permission == permission)
 
+            return query
+
         """
         Permissions
         """
