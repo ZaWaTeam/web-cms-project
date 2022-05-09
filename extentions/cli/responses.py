@@ -11,6 +11,7 @@ from rich.console import Console
 from core.configreader import DataBaseConfig
 from core.managers.logging import Log
 from core.plugins.reader import PluginReader
+from core.managers.user import UserManagement
 # Extentions
 from extentions.cli.helpers import find_filter
 
@@ -166,3 +167,12 @@ class CLIResponses():
 
             print(table)
             return table
+
+    class User:
+        def create(username: str, email: str, password: str):
+            # Initialize user management
+            user_manager = UserManagement()
+
+            create_user = user_manager.create_user(username, email, password)
+
+            return create_user

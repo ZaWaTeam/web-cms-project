@@ -4,11 +4,9 @@ import json
 
 
 class DataBaseConfig():
-    def __init__(self):
-        pass
 
     # Create new configuration
-    def create_config(self, config_name: str, value: str, mode: str = None):
+    def create_config(self, config_name: str, value: str, exception: bool = False):
         """
         Create new config stored in database
         ------------------------------------
@@ -19,7 +17,7 @@ class DataBaseConfig():
 
         """
 
-        if mode != "tf":
+        if exception:
             self.exists_exception(config_name=config_name, mirror=False)
 
         query = db.Configuration.create(name=config_name, value=value)

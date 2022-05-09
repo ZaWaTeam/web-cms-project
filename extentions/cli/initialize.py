@@ -64,3 +64,20 @@ def plugindebug(name: str):
 @app.command()
 def readplugin(plugin: str):
     plugin = responses.Plugins.read_information(plugin)
+
+
+"""
+User Management
+"""
+
+
+@app.command()
+def createuser(username: str, email: str, password: str):
+    try:
+        create_user = responses.User.create(username, email, password)
+
+        if create_user:
+            Log(f"User {username} created successfully!", 3)
+
+    except Exception as e:
+        Log(f"Failed to create user {username}, due to {e}", 2)

@@ -19,7 +19,7 @@ class DatabaseOperations():
             group_inst = cls.group_get_create(group)
 
             query = UserModel.create(
-                username=username, email=email, password=password, group=group_inst.id)
+                username=username, email=email, password=password, group_id=1)
 
             return query
 
@@ -27,7 +27,7 @@ class DatabaseOperations():
         Groups
         """
         @classmethod
-        def group_get_create(cls, group):
+        def group_get_or_default(cls, group):
             """
             Gets group by name or create
             """
