@@ -12,6 +12,7 @@ class DatabaseOperations():
         """
         User CRUD operations
         """
+
         @classmethod
         def user_create(cls, username: str, email: str, password: str, group: str):
             """
@@ -52,6 +53,7 @@ class DatabaseOperations():
         """
         Groups
         """
+
         @classmethod
         def group_get(cls, group):
             """
@@ -76,12 +78,13 @@ class DatabaseOperations():
         """
         Permissions
         """
+
         @classmethod
         def create_permission(cls, permission: str, group_name: str = None, user_name: str = None):
             """
             Creates permission
             """
-            if group_name == None and user_name == None:
+            if group_name is None and user_name is None:
                 raise PermissionFollowIndexException(permission)
 
             elif group_name == None:
@@ -92,7 +95,7 @@ class DatabaseOperations():
 
                 return query
 
-            elif user_name == None:
+            elif user_name is None:
                 # Define it to group
                 group = cls.group_get(group_name)
                 query = Permissions.create(
@@ -106,12 +109,13 @@ class DatabaseOperations():
         """
         Editables operation
         """
+
         def create(name: str, value, index: int):
             """
             Create editable
             """
 
-            if index > 0 and index < 3:
+            if 0 < index < 3:
                 value = json.dumps(value)
 
             query = Editables.create(name=name, value=value, index=index)
