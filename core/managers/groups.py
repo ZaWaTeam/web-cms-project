@@ -2,8 +2,17 @@ from core.database.models.main import Groups
 
 
 class GroupsManager:
+    """
+    ## Group Management.
+    Core function adds accessbillity to groups
+    Manage with groups and manager users to add to this group
+    """
+
     @classmethod
     def create_group(self, name: str):
+        """
+        Create new group.
+        """
         query = Groups.create(name=name)
         return query
 
@@ -23,3 +32,8 @@ class GroupsManager:
         g.name = name
         g.save()
         return True
+
+    def get_group(self, group_id: int):
+        query = Groups.select().where(Groups.id == group_id).get_or_none()
+
+        return query

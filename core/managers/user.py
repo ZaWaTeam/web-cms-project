@@ -17,7 +17,7 @@ class UserManagement:
         self.crud = DatabaseOperations()
         self.permission_manager = PermissionsManagement()
 
-    def create_user(self, username: str, email: str, password: str, group: str = None, **kwargs):
+    def create_user(self, username: str, email: str, password: str, group: int = None, **kwargs):
         """
         ## Create user account
 
@@ -48,9 +48,12 @@ class UserManagement:
             Log("Failed to create new super user", 2)
             return None
 
+        # Get new created user
+        get_new_user = self.crud.UserCrud.user_get(username)
+
         # Other code, else condition
         create_permission = self.permission_manager.create_permission(
-            "*", user=username)
+            "*", user=get_new_user.id)
 
         if create_permission:
             Log("Successfully created new super user!", 3)

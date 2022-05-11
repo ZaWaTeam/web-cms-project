@@ -14,15 +14,10 @@ class DatabaseOperations():
         """
 
         @classmethod
-        def user_create(cls, username: str, email: str, password: str, group: str):
+        def user_create(cls, username: str, email: str, password: str, group_id: int = None):
             """
             Create & write user to database
             """
-            if group == None:
-                group_id = None
-
-            else:
-                group_id = cls.group_get(group).id
 
             query = UserModel.create(
                 username=username, email=email, password=password, group_id=group_id)
@@ -39,14 +34,13 @@ class DatabaseOperations():
             return query
 
         @classmethod
-        def user_get_permission(cls, username: str, permission: str):
+        def user_get_permission(cls, user_id: int, permission: str):
             """
             Get users permission
             """
-            user = cls.user_get(username)
 
             query = Permissions.get_or_none(
-                Permissions.permission == permission and Permissions.user_id == user.id)
+                Permissions.permission == permission and Permissions.user_id == user_id)
 
             return query
 
@@ -64,14 +58,13 @@ class DatabaseOperations():
             return query
 
         @classmethod
-        def group_get_permission(cls, group_name: str, permission: str):
+        def group_get_permission(cls, group_id: int, permission: str):
             """
             Get group's permission
             """
-            group = cls.group_get(group_name)
 
             query = Permissions.get_or_none(
-                Permissions.group_id == group.id and Permissions.permission == permission)
+                Permissions.group_id == group_id and Permissions.permission == permission)
 
             return query
 
@@ -80,26 +73,24 @@ class DatabaseOperations():
         """
 
         @classmethod
-        def create_permission(cls, permission: str, group_name: str = None, user_name: str = None):
+        def create_permission(cls, permission: str, group_id: str = None, user_id: str = None):
             """
             Creates permission
             """
-            if group_name is None and user_name is None:
+            if group_id is None and user_id is None:
                 raise PermissionFollowIndexException(permission)
 
-            elif group_name == None:
+            elif group_id == None:
                 # Define it to user
-                user = cls.user_get(user_name)
                 query = Permissions.create(
-                    permission=permission, user_id=user.id)
+                    permission=permission, user_id=user_id)
 
                 return query
 
-            elif user_name is None:
+            elif user_id is None:
                 # Define it to group
-                group = cls.group_get(group_name)
                 query = Permissions.create(
-                    permission=permission, group_id=group.id)
+                    permission=permission, group_id=group_id)
 
                 return query
 

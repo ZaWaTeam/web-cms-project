@@ -14,7 +14,7 @@ class PermissionsManagement():
     def __init__(self) -> None:
         self.db = DatabaseOperations
 
-    def create_permission(self, permission: str, group: str = None, user: str = None):
+    def create_permission(self, permission: str, group: int = None, user: int = None):
         if group == None and user == None:
             raise PermissionFollowIndexException(permission)
 
