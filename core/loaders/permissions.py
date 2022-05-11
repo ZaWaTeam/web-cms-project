@@ -24,7 +24,7 @@ class PermissionsLoader:
 
         for perms in permissions:
             self.permissions.append(
-                {"identy": perms.identy, "description": perms.description})
+                {"identy": perms["identy"], "description": perms["description"]})
 
         # Plugin reader
 
@@ -36,6 +36,6 @@ class PermissionsLoader:
             if get_perms:
                 for plugin_perms in get_perms:
                     self.permissions.append({
-                        "identy": plugin_perms.identy,
-                        "description": plugin_perms.description
+                        "identy": plugin_perms["identy"],
+                        "description": plugin_perms["description"]
                     })

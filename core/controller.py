@@ -27,10 +27,7 @@ class Controller:
 
         read = json.load(information)
 
-        information_converted = namedtuple(
-            "CoreInformation", read.keys())(*read.values())
-
-        return information_converted
+        return read
 
     def core_permissions(self):
         """
@@ -41,7 +38,7 @@ class Controller:
 
         info = self.core_information()
 
-        if not info.permissions:
+        if not info["permissions"]:
             raise CoreHasDamage("Core manifest. Permissions not found!")
 
-        return info.permissions
+        return info["permissions"]

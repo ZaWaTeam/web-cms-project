@@ -29,10 +29,7 @@ class PluginReader():
 
             manifest_data = json.load(read_manifest)
 
-            manifest_converted = namedtuple(
-                "ManifestData", manifest_data.keys())(*manifest_data.values())
-
-            return manifest_converted
+            return manifest_data
 
         # TODO: Add exception, I was too lazy
         raise ValueError
@@ -44,8 +41,8 @@ class PluginReader():
         # Read plugin
         plugin_manifest = self.read_plugin(plugin_name)
 
-        if not plugin_manifest.plugin.permissions:
+        if not plugin_manifest["plugin"]["permissions"]:
             # TODO: Create exception. I was too lazy
             return False
 
-        return plugin_manifest.plugin.permissions
+        return plugin_manifest["plugin"]["permissions"]
