@@ -1,7 +1,7 @@
 from core.managers.hash import Hash
 from core.database.crud import DatabaseOperations
 from core.managers.logging import Log
-from core.managers.permissions import PermissionsManagement
+from core.managers.auth.permissions import PermissionsManagement
 
 
 class UserManagement:

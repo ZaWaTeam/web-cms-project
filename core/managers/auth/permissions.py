@@ -39,7 +39,7 @@ class PermissionsManagement():
 
         return create_permission
 
-    def check_for_permission(self, permission: str, user: int = None, group: int = None):
+    def check_permission(self, permission: str, user: int = None, group: int = None):
         """
         #### Checking if user or group has permission
 
@@ -63,7 +63,7 @@ class PermissionsManagement():
         # If user is set for checking
         if user:
 
-            if self.check_for_superuser(user):
+            if self.check_superuser(user):
                 return True
 
             # Get details about user
@@ -84,13 +84,13 @@ class PermissionsManagement():
 
         if group:
 
-            if self.check_for_superuser(group=group):
+            if self.check_superuser(group=group):
                 return True
 
             # Verify that group has permission
             return bool(self.check_group(permission, group))
 
-    def check_for_superuser(self, user: int = None, group: int = None):
+    def check_superuser(self, user: int = None, group: int = None):
         """
         #### Checking if user or group has permission of root user
 
