@@ -107,3 +107,6 @@ class Application():
 
         return "{% include \"" + active_template + "/" + path + "\" %}"
         # {% include "example_template/path/to/custom_path" %}
+
+
+app.jinja_env.globals.update(application=Application())

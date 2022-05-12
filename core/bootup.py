@@ -1,4 +1,3 @@
-from core.application import Application, app
 from core.managers.logging import LoggingManager, Log
 from core.loaders.plugins import PluginLoader
 from core.loaders.permissions import PermissionsLoader
@@ -23,15 +22,10 @@ def boot_up():
     permissions.load_permissions()
 
     plugins = PluginLoader()
-    application = Application()
 
     plugins.initialize_plugins()
 
-    app.jinja_env.globals.update(application=application)
-
     from core.mvc.routes import main
 
-
-boot_up()
 
 # Routers

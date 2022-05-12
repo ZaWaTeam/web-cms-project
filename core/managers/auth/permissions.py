@@ -1,7 +1,6 @@
-from core.database.crud import DatabaseOperations
+from core.database.crud import users
 from core.loaders.permissions import PermissionsLoader
 from core.managers.exceptions import PermissionFollowIndexException, PermissionNotDefinedInSystem
-from core.managers.logging import Log
 from extentions.cli import helpers
 
 
@@ -13,7 +12,7 @@ class PermissionsManagement():
     """
 
     def __init__(self) -> None:
-        self.db = DatabaseOperations
+        self.db = users.UserCrud()
 
     def create_permission(self, permission: str, group: int = None, user: int = None):
         if group == None and user == None:
@@ -34,7 +33,7 @@ class PermissionsManagement():
                 raise PermissionNotDefinedInSystem(permission)
 
         # Create permission in database
-        create_permission = database.UserCrud.create_permission(
+        create_permission = database.create_permission(
             permission, group, user)
 
         return create_permission
@@ -67,7 +66,7 @@ class PermissionsManagement():
                 return True
 
             # Get details about user
-            user_info = self.db.UserCrud.user_get(user)
+            user_info = self.db.user_get(user)
 
             # If user not exists
             if not user_info:
@@ -113,7 +112,7 @@ class PermissionsManagement():
         if user:
 
             # Get information about user
-            user_details = self.db.UserCrud.user_get(user)
+            user_details = self.db.user_get(user)
 
             if not user_details:
                 return False
@@ -142,11 +141,11 @@ class PermissionsManagement():
         """
 
         # User variable
-        user = self.db.UserCrud.user_get(user_id)
+        user = self.db.user_get(user_id)
 
         # User existence condition
         if user:
-            verify = self.db.UserCrud.user_has_permission(permission, user_id)
+            verify = self.db.user_has_permission(permission, user_id)
 
             return verify
 
@@ -162,13 +161,28 @@ class PermissionsManagement():
         """
 
         # User variable
-        group = self.db.UserCrud.group_get(group_id)
+        group = self.db.group_get(group_id)
 
         # User existence condition
         if group:
-            verify = self.db.UserCrud.group_has_permission(
+            verify = self.db.group_has_permission(
                 permission, group_id)
 
             return verify
 
         return False
+
+
+class PermissionsControllerManager():
+
+    db = users.UserCrud()
+    permissions_loader = PermissionsLoader()
+
+    @classmethod
+    def get_available_permissions(self):
+        """
+        Get available permissions in system
+        """
+        permissions_in_system = self.permissions_loader.permissions
+
+        return permissions_in_system
