@@ -2,7 +2,7 @@ from flask import send_from_directory
 from core.application import app
 from core.configreader import DataBaseConfig
 from core.managers.logging import Log
-from core.mvc.controllers.home.main import MainController, PageController
+from core.mvc.controllers.main import MainController, PageController
 from defines import BASE_DIR
 
 controllers = {"main": MainController(), "page": PageController()}
