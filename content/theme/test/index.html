@@ -18,6 +18,11 @@
 
     {% endblock content %}
     <!-- End of content block -->
+    {% if application.user_is_authorized() %}
+        Logged in as {{ application.user_is_authorized().user.username }}
+    {% else %}
+        Not logged in
+    {% endif %}
 
     <!-- Footer -->
     {% block footer %}{% endblock footer %}

@@ -2,6 +2,7 @@ from flask import render_template, redirect, Response, make_response, request, a
 from flask.views import View
 from core.configreader import DataBaseConfig
 from core.managers.controllers import ControllersManager
+from core.managers.auth.user import UserManagement
 
 from core.managers.logging import Log
 

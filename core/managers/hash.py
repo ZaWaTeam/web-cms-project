@@ -5,8 +5,10 @@ class Hash:
     def crypt(self, password: str, complexity: int = 12):
         """
         # Hash password
+
         `password: str` - Password needs to be hashed
         `complexity: int` - Password rounds
+
         returns (hashed password)
         """
 
@@ -22,6 +24,5 @@ class Hash:
             - `hash: str` - Hashed passwords
         returns (boolean)
         """
-
-        result = bcrypt.checkpw(password.encode('ascii'), hash)
+        result = bcrypt.checkpw(password.encode('ascii'), hash.encode('ascii'))
         return result

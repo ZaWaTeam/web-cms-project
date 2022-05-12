@@ -25,6 +25,7 @@ def boot_up():
 
     plugins.initialize_plugins()
 
+    from core import theme_app
     from core.mvc.routes import main
 
 

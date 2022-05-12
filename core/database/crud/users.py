@@ -6,7 +6,6 @@ class UserCrud():
     """
     User CRUD operations
     """
-
     @classmethod
     def user_create(cls, username: str, email: str, password: str, group_id: int = None):
         """
@@ -24,6 +23,15 @@ class UserCrud():
         Gets user by username
         """
         query = UserModel.get_or_none(UserModel.id == id)
+
+        return query
+
+    @classmethod
+    def user_verify(cls, username: str):
+        """
+        Gets user by username
+        """
+        query = UserModel.get_or_none(UserModel.username == username)
 
         return query
 

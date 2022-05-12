@@ -1,3 +1,6 @@
+from datetime import date, timedelta
+from flask import request
+from core.managers.auth.sessions import SessionsManager
 from core.managers.hash import Hash
 from core.database.crud import users
 from core.managers.logging import Log
@@ -16,6 +19,7 @@ class UserManagement:
         self.password_hash = Hash()
         self.crud = users.UserCrud()
         self.permission_manager = PermissionsManagement()
+        self.session = SessionsManager()
 
     def create_user(self, username: str, email: str, password: str, group: int = None, **kwargs):
         """
@@ -59,17 +63,41 @@ class UserManagement:
             Log("Successfully created new super user!", 3)
             return new_user
 
-    def authorize_user(self, required_field: str, password: str):
+    def authenticate_user(self, required_field: str, password: str, request: request):
         """
         Authenticate user
         """
-        pass
+        # Verification step 01
+        verify_user = self.crud.user_verify(required_field)
 
-    def is_authenticated(self):
+        if not verify_user:
+            return False
+
+        # Verification step 02
+        verify_password = self.password_hash.check(
+            password, verify_user.password)
+
+        if not verify_password:
+            return False
+
+        # Authentication step 03
+        authenticate = self.session.start_session(
+            verify_user.id, date.today() + timedelta(weeks=5))
+
+        return authenticate
+
+    def is_authenticated(self, req: request):
         """
         If user is authenticated
         """
-        pass
+        user_account = req.cookies.get("auth")
+
+        if not user_account:
+            return None
+
+        get_session = self.session.get_session(user_account)
+
+        return get_session
 
     """
     Other users

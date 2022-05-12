@@ -1,3 +1,5 @@
+from flask import request
+from core.application import app
 from core.database.crud import users
 from core.loaders.permissions import PermissionsLoader
 from core.managers.exceptions import PermissionFollowIndexException, PermissionNotDefinedInSystem
@@ -186,3 +188,12 @@ class PermissionsControllerManager():
         permissions_in_system = self.permissions_loader.permissions
 
         return permissions_in_system
+
+    """
+    * =============== *
+      Request Handler
+    * =============== *
+    """
+
+    def has_permission(request: request, permissions: list = []):
+        pass

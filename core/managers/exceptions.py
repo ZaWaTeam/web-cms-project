@@ -46,6 +46,11 @@ class PermissionIsAlreadyExistsInDatabase(Exception):
         return f"User {self.username} already has permission \"{self.permission}\" in database!"
 
 
+class UserNotExists(Exception):
+    def __str__(self) -> str:
+        return f"User not found!"
+
+
 class CoreHasDamage(Exception):
     def __init__(self, damage: str) -> None:
         self.damage = damage

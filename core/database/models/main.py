@@ -64,4 +64,20 @@ class Permissions(pw.Model):
         database = CpDb
 
 
-CpDb.create_tables([Configuration, Editables, Groups, UserModel, Permissions])
+class Sessions(pw.Model):
+    """
+    User login session.
+    """
+    id = pw.AutoField()
+    user = pw.ForeignKeyField(UserModel, on_delete="CASCADE")
+    device = pw.CharField(max_length=255)
+    ip = pw.IPField()
+    expires = pw.DateField()
+    status = pw.CharField(max_length=10, default="active")
+    token = pw.TextField()
+
+    class Meta:
+        database = CpDb
+
+
+CpDb.create_tables([Configuration, Editables, Groups, UserModel, Sessions])
