@@ -1,1 +1,9 @@
 site_name: WebCMS Documentation
+
+theme:
+    name: readthedocs
+    locale: ru
+    highlightjs: true
+    hljs_languages:
+        - yaml
+        - rust
