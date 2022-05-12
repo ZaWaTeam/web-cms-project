@@ -37,6 +37,15 @@ class PermissionNotDefinedInSystem(Exception):
         return f"Failed to define permission {self.permission}. Are you sure that this is registered permission?"
 
 
+class PermissionIsAlreadyExistsInDatabase(Exception):
+    def __init__(self, permission: str, username: str) -> None:
+        self.permission = permission
+        self.username = username
+
+    def __str__(self) -> str:
+        return f"User {self.username} already has permission \"{self.permission}\" in database!"
+
+
 class CoreHasDamage(Exception):
     def __init__(self, damage: str) -> None:
         self.damage = damage

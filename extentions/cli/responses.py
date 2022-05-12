@@ -10,6 +10,7 @@ from rich.console import Console
 # Core
 from core.configreader import DataBaseConfig
 from core.managers.logging import Log
+from core.managers.permissions import PermissionsManagement
 from core.plugins.reader import PluginReader
 from core.managers.user import UserManagement
 # Extentions

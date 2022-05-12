@@ -70,3 +70,32 @@ class UserManagement:
         If user is authenticated
         """
         pass
+
+    """
+    Other users
+    """
+
+    def get_user_info(self, user_id: int):
+        """
+        Get information about user
+
+        return: True / False
+        """
+        get_user = self.crud.UserCrud.user_get(id=user_id)
+
+        return get_user
+
+    def users_group_exists(self, user_id: int):
+        """
+        If user has group it returns True.
+        Else False
+
+        return: True / False
+        """
+        get_user = self.get_user_info(user_id)
+
+        if not get_user:
+            return False
+            # TODO: Нужно сделать вместо return False. Raise exception
+
+        return get_user.group_id

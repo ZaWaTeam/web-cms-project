@@ -1,5 +1,6 @@
 from core.database.models.main import Editables, Groups, Permissions, UserModel
 from core.managers.exceptions import PermissionFollowIndexException
+from core.managers.logging import Log
 from .models import *
 import json
 
@@ -25,11 +26,11 @@ class DatabaseOperations():
             return query
 
         @classmethod
-        def user_get(cls, username: str):
+        def user_get(cls, id: str):
             """
             Gets user by username
             """
-            query = UserModel.get_or_none(UserModel.username == username)
+            query = UserModel.get_or_none(UserModel.id == id)
 
             return query
 
@@ -49,22 +50,11 @@ class DatabaseOperations():
         """
 
         @classmethod
-        def group_get(cls, group):
+        def group_get(cls, group_id: int):
             """
             Gets group by name or create
             """
-            query = Groups.get_or_none(Groups.name == group)
-
-            return query
-
-        @classmethod
-        def group_get_permission(cls, group_id: int, permission: str):
-            """
-            Get group's permission
-            """
-
-            query = Permissions.get_or_none(
-                Permissions.group_id == group_id and Permissions.permission == permission)
+            query = Groups.get_or_none(Groups.id == group_id)
 
             return query
 
@@ -82,19 +72,43 @@ class DatabaseOperations():
 
             elif group_id == None:
                 # Define it to user
-                query = Permissions.create(
+                query = Permissions.get_or_create(
                     permission=permission, user_id=user_id)
 
                 return query
 
             elif user_id is None:
                 # Define it to group
-                query = Permissions.create(
+                query = Permissions.get_or_create(
                     permission=permission, group_id=group_id)
 
                 return query
 
             return None
+
+        @classmethod
+        def user_has_permission(cls, permission: str, user_id: int):
+            """
+            If user has permissions.
+
+            return bool(True / False)
+            """
+            query = Permissions.get_or_none(
+                (Permissions.user_id == user_id) & (Permissions.permission == permission))
+
+            return query
+
+        @classmethod
+        def group_has_permission(cls, permission: str, group_id: int):
+            """
+            If user has permissions.
+
+            return bool(True / False)
+            """
+            query = Permissions.select().where((Permissions.group_id ==
+                                               group_id) & (Permissions.permission == permission)).get_or_none()
+
+            return query
 
     class Editables():
         """
