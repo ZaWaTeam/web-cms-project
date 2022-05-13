@@ -6,8 +6,8 @@
 
 В него входят функции:
 
-- Создание пользователя.
-- Создание супер пользователя.
+- [Создание пользователя.](#_1)
+- [Создание супер пользователя.](#_2)
 - Управление пользователем.
 - Подробнее о каком то пользователе.
 - Список пользователей которые зарегистрированы.
@@ -43,13 +43,19 @@
 
 Для начало необходимо импортировать UserManagement
 
-    from core.managers.users import UserManagement
+    from core.managers.auth.user import UserManagement
+
+    # Если вы вызываете UserManagement с директории core:
+    from .managers.auth.user import UserManagement
+
+    # Если вы вызываете UserManagement с директории managers:
+    from .auth.user import UserManagement
 
 так-же необходимо объявить его в переменную. Если вам нужен доступ к UserManagement с класса. То можно объявить переменную класса.
 
 Метод для создании нового пользователя:
 
-***UserManagement.create_user(username: str, email: str, password: str, group: str = None)***
+***UserManagement.create_user(username: str, email: str, password: str, group: int = None)***
 
 Аргументы:
 
@@ -65,7 +71,7 @@
 
 **Примеры**
 
-    from core.managers.user import UserManagement
+    from core.managers.auth.user import UserManagement
     from core.logging import Log
 
     # Объявляем класс UserManagement
@@ -83,7 +89,7 @@
 
 Создание пользователя в классе
 
-    from core.managers.user import UserManagement
+    from core.managers.auth.user import UserManagement
     from core.logging import Log
 
     class ClassA:
@@ -108,3 +114,72 @@
 
     # Вызываем функцию
     class_a.some_function()
+
+### Создание супер пользователя
+
+При необходимсти. Необходимо создать супер пользователя у которого есть * в **Permissions**.
+
+**UserManagement** обладает таким методом как `create_super_user()` при помощи которого, можно быстро создать супер пользователя.
+У которого будут все права.
+
+Для начало необходимо импортировать **UserManagement**
+
+    from core.managers.auth.user import UserManagement
+
+    # Если вы вызываете UserManagement с директории core:
+    from .managers.auth.user import UserManagement
+
+    # Если вы вызываете UserManagement с директории managers:
+    from .auth.user import UserManagement
+
+Так-же необходимо объявить его в переменную. Если вам нужен доступ к UserManagement с класса. То можно объявить переменную класса.
+
+Метод для создании нового пользователя:
+
+***UserManagement.create_superuser(username: str, email: str, password: str)***
+
+Аргументы:
+
+- **username: string** - Имя пользователя нового супер пользователя
+- **email: string** - Почта нового супер пользователя
+- **password: string** - Пароль нового супер пользователя, в последствии он будет автоматически зашифрован **UserManagement**
+
+Возвращает:
+
+- **True: boolean** - Пользователь успешно создан и к нему присвоена * в **Permissions**.
+- **False: boolean** - Не удалось создать пользователя.
+- **None** - Не удалось создать пользователя.
+
+Примеры:
+
+    from core.managers.auth.user import UserManagement
+
+    # Объявляем класс UserManagement
+    user_manager = UserManagement()
+    
+    # Создаем супер пользователя методом UserManagement.create_super_user()
+    create_user = user_manager.create_super_user(username="Zahcoder34", email="example@gmail.com", password="qwerty123")
+
+Пример с классом:
+
+    from core.managers.auth.user import UserManagement
+    from core.managers.logging import Log
+
+    class ClassA:
+        # Вызов при инициализации класса
+        def __init__(self):
+
+            # Объявляем класс UserManagement
+            self.user_manager = UserManagement()
+        
+        def some_func(self):
+            # Создаем пользователя
+            create_user = self.user_manager.create_super_user("Zahcoder34", "example@gmail.com", "qwerty123")
+
+            return create_user
+    
+    # Тестируем
+    class_a = ClassA()
+
+    # Выводим в консоль результат. Как правило если пользователь создан успешно, ответ положительный. Если нет = None
+    Log(class_a.some_func(), 0)
