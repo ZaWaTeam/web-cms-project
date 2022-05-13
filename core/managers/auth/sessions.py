@@ -56,7 +56,11 @@ class SessionsManager:
         # return response
         return response
 
+<<<<<<< Updated upstream
     def get_session_and_logout(self, token: str, redirect_on_logout: str = "/"):
+=======
+    def no_session_logout(self, token: str, redirect_on_logout: str = "/"):
+>>>>>>> Stashed changes
         """
         ## Session info
 
@@ -66,7 +70,11 @@ class SessionsManager:
         get_session = self.db.get(token)
 
         if get_session:
+<<<<<<< Updated upstream
             return get_session
+=======
+            return None
+>>>>>>> Stashed changes
 
         response = make_response(redirect(redirect_on_logout))
 
