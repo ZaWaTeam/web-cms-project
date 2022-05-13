@@ -1,6 +1,4 @@
 import os
-from defines import BASE_DIR
-from core.managers.logging import Log
 from core.configreader import DataBaseConfig
 from importlib import import_module
 
