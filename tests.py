@@ -4,10 +4,6 @@ import unittest
 from random import randint
 from subprocess import Popen, PIPE
 
-from core.database.crud.groups import GroupsCrud
-from core.database.crud.users import UsersCrud
-from core.managers.auth.user import UserManagement
-
 with open('config.ini', 'w+') as f:
     f.write('''[DATABASE]
 Driver = Sqlite
@@ -15,6 +11,11 @@ Path = subconf.sqlite3
 
 [DEVELOPMENT]
 Debug = on''')
+
+from core.database.crud.groups import GroupsCrud
+from core.database.crud.users import UsersCrud
+from core.managers.auth.user import UserManagement
+
 from core.database.models.main import Configuration
 from core.configreader import DataBaseConfig
 from faker import Faker
