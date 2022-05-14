@@ -25,17 +25,8 @@ def boot_up():
 
     plugins.initialize_plugins()
 
-<<<<<<< Updated upstream
-    from core import theme_app
-=======
-<<<<<<< Updated upstream
-    app.jinja_env.globals.update(application=application)
-
-=======
     from core.loaders import requests
     from core import theme_app
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     from core.mvc.routes import main
 
 
