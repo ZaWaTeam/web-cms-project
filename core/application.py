@@ -1,7 +1,7 @@
 from flask import Blueprint, Flask
-from defines import BASE_DIR
+
 from core.configreader import DataBaseConfig
-from core.configparse import config
+from defines import BASE_DIR
 
 config = DataBaseConfig()
 
