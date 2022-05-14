@@ -7,4 +7,5 @@
 
 - for windows `py main.py` or `python main.py`
 
+- to debug run `start.py`
 ### Project in development, so debug mode is active
