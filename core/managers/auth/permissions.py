@@ -14,7 +14,7 @@ class PermissionsManagement():
     """
 
     def __init__(self) -> None:
-        self.db = users.UserCrud()
+        self.db = users.UsersCrud()
 
     def create_permission(self, permission: str, group: int = None, user: int = None):
         if group == None and user == None:
@@ -177,7 +177,7 @@ class PermissionsManagement():
 
 class PermissionsControllerManager():
 
-    db = users.UserCrud()
+    db = users.UsersCrud()
     permissions_loader = PermissionsLoader()
     permissions_manager = PermissionsManagement()
 

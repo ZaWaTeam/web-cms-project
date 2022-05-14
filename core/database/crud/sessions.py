@@ -2,7 +2,7 @@ from ..models.main import *
 from . import users
 
 
-class SessionsCRUD(users.UserCrud):
+class SessionsCRUD(users.UsersCrud):
     """
     Session Database Operations
     """

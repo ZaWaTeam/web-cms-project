@@ -95,14 +95,14 @@
     class ClassA:
 
         # Данная функция вызывается при инициализации класса
-        def __init__(self):
+        def __init__(cls):
             # Объявляем переменную пользователя
-            self.user_manager = UserManagement()
+            cls.user_manager = UserManagement()
 
         # Какая-то нужная функция
-        def some_function(self):
+        def some_function(cls):
             # Создание пользователя
-            create_user = self.user_manager.create_user(username="Zahcoder34", email="example@gmail.com", password="qwerty123")
+            create_user = cls.user_manager.create_user(username="Zahcoder34", email="example@gmail.com", password="qwerty123")
             
             # Делаем проверку создался ли пользователь.
             if create_user:
@@ -167,14 +167,14 @@
 
     class ClassA:
         # Вызов при инициализации класса
-        def __init__(self):
+        def __init__(cls):
 
             # Объявляем класс UserManagement
-            self.user_manager = UserManagement()
+            cls.user_manager = UserManagement()
         
-        def some_func(self):
+        def some_func(cls):
             # Создаем пользователя
-            create_user = self.user_manager.create_super_user("Zahcoder34", "example@gmail.com", "qwerty123")
+            create_user = cls.user_manager.create_super_user("Zahcoder34", "example@gmail.com", "qwerty123")
 
             return create_user
     

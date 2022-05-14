@@ -17,7 +17,7 @@ class UserManagement:
 
     def __init__(self) -> None:
         self.password_hash = Hash()
-        self.crud = users.UserCrud()
+        self.crud = users.UsersCrud()
         self.permission_manager = PermissionsManagement()
         self.session = SessionsManager()
 
