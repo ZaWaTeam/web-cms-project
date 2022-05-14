@@ -63,11 +63,7 @@ class UserManagement:
             Log("Successfully created new super user!", 3)
             return new_user
 
-<<<<<<< Updated upstream
-    def authenticate_user(self, required_field: str, password: str, request: request):
-=======
     def authenticate_user(self, required_field: str, password: str):
->>>>>>> Stashed changes
         """
         Authenticate user
         """
@@ -103,8 +99,6 @@ class UserManagement:
 
         return get_session
 
-<<<<<<< Updated upstream
-=======
     def session_checkup(self, req: request):
         """
         If user is authenticated
@@ -115,7 +109,6 @@ class UserManagement:
 
         return get_session
 
->>>>>>> Stashed changes
     """
     Other users
     """
