@@ -179,6 +179,7 @@ class PermissionsControllerManager():
 
     db = users.UserCrud()
     permissions_loader = PermissionsLoader()
+    permissions_manager = PermissionsManagement()
 
     @classmethod
     def get_available_permissions(self):
@@ -195,5 +196,17 @@ class PermissionsControllerManager():
     * =============== *
     """
 
-    def has_permission(request: request, permissions: list = []):
-        pass
+    def has_permission(self, user_id: int, permissions: list = []):
+        if not bool(len(permissions)):
+            return False
+
+        has_permissions = []
+
+        for permission in permissions:
+            permission_check = self.permissions_manager.check_permission(
+                permission=permission, user=user_id, group=None)
+
+            if permission_check:
+                has_permissions.append(permission)
+
+        return has_permissions
