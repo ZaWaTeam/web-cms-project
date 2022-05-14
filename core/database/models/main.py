@@ -90,4 +90,4 @@ class Sessions(pw.Model):
         database = CpDb
 
 
-CpDb.create_tables([Configuration, Editables, Groups, UserModel, Sessions])
+CpDb.create_tables([Configuration, Editables, Groups, UserModel, Sessions, Permissions])

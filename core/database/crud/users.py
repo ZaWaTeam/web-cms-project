@@ -84,7 +84,7 @@ class UsersCrud:
         if group_id is None and user_id is None:
             raise PermissionFollowIndexException(permission)
 
-        elif group_id == None:
+        elif group_id is None:
             # Define it to user
             query = Permissions.get_or_create(
                 permission=permission, user_id=user_id)

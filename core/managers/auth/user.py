@@ -53,7 +53,7 @@ class UserManagement:
             return None
 
         # Get new created user
-        get_new_user = self.crud.user_get(username)
+        get_new_user = self.crud.user_verify(username)
 
         # Other code, else condition
         create_permission = self.permission_manager.create_permission(

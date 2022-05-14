@@ -17,7 +17,7 @@ class PermissionsManagement():
         self.db = users.UsersCrud()
 
     def create_permission(self, permission: str, group: int = None, user: int = None):
-        if group == None and user == None:
+        if group is None and user is None:
             raise PermissionFollowIndexException(permission)
 
         # Database
