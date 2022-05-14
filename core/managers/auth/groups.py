@@ -28,7 +28,11 @@ class GroupsManager:
         pass
 
     def set_name(self, group_id: int, name: str):
-        g = Groups.select().where(Groups.id == group_id).get()
+        g = Groups.select().where(Groups.id == group_id).get_or_none()
+
+        if not g:
+            return False
+
         g.name = name
         g.save()
         return True
