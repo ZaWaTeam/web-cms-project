@@ -65,10 +65,10 @@ class UsersCrud:
         """
         Add user to group(change group of user)
         """
-        user = UserModel.select().where(UserModel.id == user_id).get_or_none(user_id)
+        user = UserModel.get_or_none(UserModel.id == user_id)
         if not user:
             return False
-        user.group = GroupsCrud.get_group(group_id)
+        user.group = group_id
         user.save()
         return True
 
