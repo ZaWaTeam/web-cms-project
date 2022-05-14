@@ -1,11 +1,13 @@
+from .groups import GroupsCrud
 from ..models.main import *
 from core.managers.exceptions import PermissionFollowIndexException
 
 
-class UserCrud():
+class UsersCrud:
     """
     User CRUD operations
     """
+
     @classmethod
     def user_create(cls, username: str, email: str, password: str, group_id: int = None):
         """
@@ -56,8 +58,19 @@ class UserCrud():
         Gets group by name or create
         """
         query = Groups.get_or_none(Groups.id == group_id)
-
         return query
+
+    @classmethod
+    def set_group_member(cls, user_id: int, group_id: int):
+        """
+        Add user to group(change group of user)
+        """
+        user = UserModel.select().where(UserModel.id == user_id).get_or_none(user_id)
+        if not user:
+            return False
+        user.group = GroupsCrud.get_group(group_id)
+        user.save()
+        return True
 
     """
         Permissions
@@ -107,6 +120,6 @@ class UserCrud():
         return bool(True / False)
         """
         query = Permissions.select().where((Permissions.group_id ==
-                                           group_id) & (Permissions.permission == permission)).get_or_none()
+                                            group_id) & (Permissions.permission == permission)).get_or_none()
 
         return query
