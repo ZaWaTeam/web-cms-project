@@ -4,6 +4,8 @@ import unittest
 from random import randint
 from subprocess import Popen, PIPE
 
+from core.managers.auth.permissions import PermissionsManagement
+
 with open('config.ini', 'w+') as f:
     f.write('''[DATABASE]
 Driver = Sqlite
@@ -16,7 +18,7 @@ from core.database.crud.groups import GroupsCrud
 from core.database.crud.users import UsersCrud
 from core.managers.auth.user import UserManagement
 
-from core.database.models.main import Configuration
+from core.database.models.main import Configuration, Permissions
 from core.configreader import DataBaseConfig
 from faker import Faker
 
@@ -71,6 +73,25 @@ class TestingCMS(unittest.TestCase):
         self.assertTrue(user_manager.users_group_exists(user.id),
                         msg=f"New user({repr(UsersCrud.user_get(user.id))}) has no group,"
                             f" but should have {repr(group)}")
+
+    def test_perms(self):
+        Faker.seed(randint(1, 100))
+        group = GroupsCrud.create(name=fake.user_name())
+        user_manager = UserManagement()
+        user = user_manager.create_user(username=fake.user_name(),
+                                        email=fake.email(),
+                                        password=fake.password(),
+                                        group_id=group.id)
+        print(f"user created: {repr(user)}\n"
+              f"group for him: {repr(group)}")
+        self.assertEqual(user, UsersCrud.user_get(user.id),
+                         msg="Found user in db is not equal to new user")
+        permission_manager = PermissionsManagement()
+        perm = permission_manager.create_permission('*', group.id)[0]
+        print(f"permission created: {perm}")
+        self.assertEqual(perm, Permissions.get_or_none(Permissions.id == perm.id))
+        self.assertTrue(permission_manager.check_group('*', group.id))
+        self.assertTrue(permission_manager.check_permission('*', user.id))
 
 
 if __name__ == '__main__':

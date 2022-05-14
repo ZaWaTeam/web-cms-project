@@ -1,6 +1,5 @@
-from .groups import GroupsCrud
-from ..models.main import *
 from core.managers.exceptions import PermissionFollowIndexException
+from ..models.main import *
 
 
 class UsersCrud:
@@ -38,7 +37,7 @@ class UsersCrud:
         return query
 
     @classmethod
-    def user_get_permission(cls, user_id: int, permission: str):
+    def get_user_permission(cls, user_id: int, permission: str):
         """
         Get users permission
         """
@@ -47,7 +46,6 @@ class UsersCrud:
             Permissions.permission == permission and Permissions.user_id == user_id)
 
         return query
-
     """
         Groups
         """
@@ -77,7 +75,7 @@ class UsersCrud:
         """
 
     @classmethod
-    def create_permission(cls, permission: str, group_id: str = None, user_id: str = None):
+    def create_permission(cls, permission: str, group_id: str = None, user_id: str = None) -> tuple[Permissions, bool]:
         """
         Creates permission
         """

@@ -73,6 +73,12 @@ class Permissions(pw.Model):
     class Meta:
         database = CpDb
 
+    def __str__(self):
+        return f'Permission(id={self.id}, ' \
+               f'permission={self.permission}, ' \
+               f'group={self.group}, ' \
+               f'user={self.user})'
+
 
 class Sessions(pw.Model):
     """
