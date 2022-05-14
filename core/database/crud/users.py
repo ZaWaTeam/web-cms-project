@@ -18,7 +18,7 @@ class UserCrud():
         return query
 
     @classmethod
-    def user_get(cls, id: str):
+    def user_get(cls, id: int):
         """
         Gets user by username
         """
