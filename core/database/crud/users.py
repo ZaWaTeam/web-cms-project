@@ -61,7 +61,7 @@ class UsersCrud:
         return query
 
     @classmethod
-    def set_group_member(cls, user_id: int, group_id: int):
+    def add_user_to_group(cls, user_id: int, group_id: int):
         """
         Add user to group(change group of user)
         """

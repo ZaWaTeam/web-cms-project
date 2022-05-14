@@ -21,7 +21,7 @@ class UserManagement:
         self.permission_manager = PermissionsManagement()
         self.session = SessionsManager()
 
-    def create_user(self, username: str, email: str, password: str, group: int = None, **kwargs):
+    def create_user(self, username: str, email: str, password: str, group_id: int = None, **kwargs):
         """
         ## Create user account
 
@@ -37,7 +37,7 @@ class UserManagement:
         """
         hash_password = self.password_hash.crypt(password=password)
         create_user = self.crud.user_create(
-            username=username, email=email, password=hash_password, group=group)
+            username=username, email=email, password=hash_password, group_id=group_id)
 
         return create_user
 

@@ -36,6 +36,9 @@ class Groups(pw.Model):
     class Meta:
         database = CpDb
 
+    def __repr__(self):
+        return f"Groups(id={self.id}, name={self.name})"
+
 
 class UserModel(pw.Model):
     """
@@ -49,6 +52,13 @@ class UserModel(pw.Model):
 
     class Meta:
         database = CpDb
+
+    def __repr__(self):
+        return f"UserModel(id={self.id}, " \
+               f"username={self.username}, " \
+               f"email={self.email}, " \
+               f"password={self.password}, " \
+               f"group={self.group})"
 
 
 class Permissions(pw.Model):

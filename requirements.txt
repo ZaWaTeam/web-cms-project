@@ -47,3 +47,4 @@ urllib3==1.26.9
 watchdog==2.1.7
 Werkzeug==2.1.2
 zipp==3.8.0
+Faker==13.11.1
