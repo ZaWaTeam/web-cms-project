@@ -4,7 +4,7 @@ from core.database.models.main import Groups
 class GroupsManager:
     """
     ## Group Management.
-    Core function adds accessbillity to groups
+    Core function adds accessibility to groups
     Manage with groups and manager users to add to this group
     """
 
