@@ -15,7 +15,7 @@ class Plugin(PluginGeneric):
     @generic.Decorators.on_request
     def show_ip(request):
         generic.Debug.success(
-            f"- Request from ip adress - {request.remote_addr}")
+            f"- Request from ip address - {request.remote_addr}")
 
     # This function will be callen when administrator from admin panel disables plugin
 
