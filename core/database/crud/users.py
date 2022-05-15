@@ -47,8 +47,8 @@ class UsersCrud:
 
         return query
     """
-        Groups
-        """
+    Groups
+    """
 
     @classmethod
     def group_get(cls, group_id: int):
@@ -71,8 +71,8 @@ class UsersCrud:
         return True
 
     """
-        Permissions
-        """
+    Permissions
+    """
 
     @classmethod
     def create_permission(cls, permission: str, group_id: str = None, user_id: str = None) -> tuple[Permissions, bool]:
