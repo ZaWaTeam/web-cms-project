@@ -109,6 +109,17 @@ class UserManagement:
 
         return get_session
 
+    def get_current_user(self, req: request):
+        """
+        Gets data about current user
+        """
+        user = self.is_authenticated(req)
+
+        if user:
+            return user.user
+
+        return None
+
     """
     Other users
     """
