@@ -25,17 +25,15 @@ class UserManagement:
 
     def create_user(self, username: str, email: str, password: str, group_id: int = None, **kwargs):
         """
-        ## Create user account
+        The create_user function creates a new user account.
 
-        User Management function creates new user
-
-        args (required):
-            - `username: str`: Username of new user.
-            - `email: str`: Email of new user.
-            - `password: str`: Password of new user.
-
-        args (Optional):
-            - `**kwargs`: More information field.
+        :param self: Access variables that belongs to the class
+        :param username:str: Specify the username of the user
+        :param email:str: Specify the email of the user
+        :param password:str: Store the password of the new user
+        :param group_id:int=None: Specify a group id for the user
+        :param **kwargs: Allow for an arbitrary number of keyword arguments to be passed in
+        :return: The result of the crud
         """
         if config.has_option("DEVELOPMENT", "HashTime"):
             hash_password = self.password_hash.crypt(password=password,
@@ -52,7 +50,15 @@ class UserManagement:
 
     def create_super_user(self, username: str, email: str, password: str, **kwargs):
         """
-        ## Create super user
+        The create_super_user function creates a new super user.
+
+
+        :param self: Reference the class in which the function is defined
+        :param username:str: Specify the username of the new user
+        :param email:str: Specify the email address of the user
+        :param password:str: Set the password of the user
+        :param **kwargs: Pass in any additional keyword arguments (hence the name) to our function
+        :return: A user object
         """
         new_user = self.create_user(
             username=username, email=email, password=password)
@@ -74,7 +80,14 @@ class UserManagement:
 
     def authenticate_user(self, required_field: str, password: str):
         """
-        Authenticate user
+        The authenticate_user function takes in a required_field and password.
+        It then verifies that the user exists, and if so, checks to see if the password matches.
+        If both of these are true, it returns True.
+
+        :param self: Reference the class itself
+        :param required_field:str: Store the user's email or username
+        :param password:str: Store the password entered by the user
+        :return: True if the user is successfully authenticated
         """
         # Verification step 01
         verify_user = self.crud.user_verify(required_field)
@@ -97,7 +110,12 @@ class UserManagement:
 
     def is_authenticated(self, req: request):
         """
-        If user is authenticated
+        The is_authenticated function is used to check if a user is authenticated.
+        It takes in the request object and returns either None or the user's account name.
+
+        :param self: Access the class attributes
+        :param req:request: Get the request object from flask
+        :return: The user_account if the cookie is valid
         """
         user_account = req.cookies.get("auth")
 
@@ -110,7 +128,12 @@ class UserManagement:
 
     def session_checkup(self, req: request):
         """
-        If user is authenticated
+        The session_checkup function is a helper function that is used to check if the user has an active session.
+        If they do not, it will redirect them to the login page. If they do have an active session, it will return True.
+
+        :param self: Access attributes and methods of the class in python
+        :param req:request: Get the user account from the cookie
+        :return: The value of the get_session variable
         """
         user_account = req.cookies.get("auth")
 
@@ -120,7 +143,12 @@ class UserManagement:
 
     def get_current_user(self, req: request):
         """
-        Gets data about current user
+        The get_current_user function is a helper function that is used to determine the current user.
+        It first checks if the user is authenticated, and then returns either None or the current user.
+
+        :param self: Access the class attributes
+        :param req:request: Get the current user's information
+        :return: The user object when the user is authenticated
         """
         user = self.is_authenticated(req)
 
@@ -133,11 +161,14 @@ class UserManagement:
     Other users
     """
 
-    def get_user_info(self, user_id: int):
+    def get_user_info(self, user_id: int) -> bool:
         """
-        Get information about user
+        The get_user_info function accepts a user_id as an argument and returns the corresponding User object.
+        If no such User exists, it returns False.
 
-        return: True / False
+        :param self: Access the class attributes and methods
+        :param user_id:int: Get the user_id from the database
+        :return: A boolean value
         """
         get_user = self.crud.user_get(id=user_id)
 

@@ -17,6 +17,15 @@ class PermissionsManagement():
         self.db = users.UsersCrud()
 
     def create_permission(self, permission: str, group: int = None, user: int = None):
+        """
+        The create_permission function creates a permission in the database.
+
+        :param self: Reference the class instance
+        :param permission:str: Define the permission that is going to be created
+        :param group:int=None: Define the group of the permission
+        :param user:int=None: Define if the permission is assigned to a user or group
+        :return: The permission object
+        """
         if group is None and user is None:
             raise PermissionFollowIndexException(permission)
 
@@ -42,16 +51,14 @@ class PermissionsManagement():
 
     def check_permission(self, permission: str, user: int = None, group: int = None):
         """
-        #### Checking if user or group has permission
+        The check_permission function is used to check if a user or group has permission.
+        It takes three arguments: the permission, the user and the group. If both are None, it will raise an exception.
 
-        arguments:
-            - permission: string - for which you looking for
-            - user: string = None - user which have permissions or not
-            - group: string = None - group which have permissions or not
-
-        returns: 
-            - True: bool - User or Group have permission
-            - False: bool - User or Group don't have this perms
+        :param self: Access variables that belong to the class
+        :param permission:str: Check if user or group has permission
+        :param user:int=None: Check if the user has a permission or not
+        :param group:int=None: Check if the user is in a group or not
+        :return: A boolean if group or user has a permission
         """
 
         # It can't be group and user both of them are = None
@@ -93,15 +100,13 @@ class PermissionsManagement():
 
     def check_superuser(self, user: int = None, group: int = None):
         """
-        #### Checking if user or group has permission of root user
+        The check_superuser function checks if the user or group has permission(*) of root user.
 
-        arguments:
-            - `user: string = None`
-            - `group: string = None`
 
-        returns: 
-            - `True: bool` - User or Group have permission of root
-            - `False: bool` - User or Group don't have permission of root
+        :param self: Access variables that belongs to the class
+        :param user:int=None: User id
+        :param group:int=None: Group id
+        :return: True if the user or group has permission of root user
         """
 
         if not user and not group:
@@ -135,11 +140,13 @@ class PermissionsManagement():
 
     def check_user(self, permission: str, user_id: int):
         """
-        ### Check user if it contains permission
+        The check_user function checks if a user has a certain permission.
 
-        arguments:
-            - `permission: string` - What permission are we looking for?
-            - `user_id: integer` - What user are we looking for?
+
+        :param self: Access variables that belongs to the class
+        :param permission:str: Tell the function what permission we are looking for
+        :param user_id:int: Get the user from the database
+        :return: A boolean value that shows if user has permission
         """
 
         # User variable
@@ -155,11 +162,12 @@ class PermissionsManagement():
 
     def check_group(self, permission: str, group_id: int):
         """
-        ### Check group if it contains permission
+        The check_group function checks if a group has a permission.
 
-        arguments:
-            - `permission: string` - What permission are we looking for?
-            - `group_id: integer` - What group are we looking for?
+        :param self: Access variables that belongs to the class
+        :param permission:str: Permission name
+        :param group_id:int: Specify the group to check
+        :return: A boolean value that shows if group has permission
         """
 
         # User variable
@@ -176,17 +184,23 @@ class PermissionsManagement():
 
 
 class PermissionsControllerManager():
-
     db = users.UsersCrud()
     permissions_loader = PermissionsLoader()
     permissions_manager = PermissionsManagement()
 
     @classmethod
-    def get_available_permissions(self):
+    def get_available_permissions(cls):
         """
-        Get available permissions in system
+        The get_available_permissions function returns a list of all the permissions in the system.
+        The permissions are returned as a dictionary with two keys: 'permissions' and 'groups'.
+        The value for each of these keys is a list of dictionaries, where each dictionary contains
+        the name, description, and id number for that permission or group. The id numbers can be used to
+        associate groups with individual users.
+
+        :param cls: Access variables that belongs to the class
+        :return: all existing permissions
         """
-        permissions_in_system = self.permissions_loader.permissions
+        permissions_in_system = cls.permissions_loader.permissions
 
         return permissions_in_system
 
@@ -195,13 +209,25 @@ class PermissionsControllerManager():
       Request Handler
     * =============== *
     """
+
     @classmethod
-    def has_permission(self, user_id: int, permissions: list = []):
+    def has_permission(cls, user_id: int, permissions: list = None):
+        """
+        The has_permission function is a helper function that checks if the user has ALL permissions from list
+
+        :param cls: Refer to the class itself, rather than an instance of the class
+        :param user_id:int: User id to check
+        :param permissions:list=None: Pass a list of permissions that the user must have
+        :return: True if user has ALL permissions from list that was passed, else False
+        """
+        if permissions is None:
+            permissions = []
+
         if not bool(len(permissions)):
             return False
 
         for permission in permissions:
-            permission_check = self.permissions_manager.check_permission(
+            permission_check = cls.permissions_manager.check_permission(
                 permission=permission, user=user_id, group=None)
 
             if not permission_check:

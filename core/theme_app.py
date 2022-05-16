@@ -21,8 +21,16 @@ class Application():
         self.__theme_manager = functionality.ThemeFunctionality()
 
     def get_editable(self, name: str, default: str):
+        """
+        The get_editable function is a helper function that returns Editable object.
+
+
+        :param self: Refer to the current instance of the class
+        :param name:str: Specify the name of the editable
+        :param default:str: Set the default value of the editable
+        :return: Editable object or default str if it does not exist
+        """
         # Theme manager
-        self.__theme_manager
         editable_manager = editables.EditableManagers()
 
         get_editable = editable_manager.get_editable(name)
@@ -33,6 +41,13 @@ class Application():
         return get_editable
 
     def load_meta(self):
+        """
+        The load_meta function loads the static files for a given template.
+        It is called in the base.html file and it returns a string of all the static files to be loaded.
+
+        :param self: Access variables that belong to the class
+        :return: A html string for style
+        """
         # Active template folder name
         active_template = config.get_config("active_template")
 

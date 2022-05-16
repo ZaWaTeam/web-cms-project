@@ -21,9 +21,15 @@ class SessionsManager:
 
     def start_session(self, user_id: int, life_time: date, redirect_to: str = "/"):
         """
-        Starting session for user.
+        The start_session function creates a new session for the user.
+        It takes in two parameters, user_id and life_time.
+        The function returns hashed token.
 
-        return: hashed session token
+        :param self: Access variables that belongs to the class
+        :param user_id:int: User that starts the session
+        :param life_time:date: Set the expiry date of the cookie
+        :param redirect_to:str=&quot;/&quot;: Redirect the user to a specific page after they have logged in
+        :return: The hashed session token
         """
         user = self.db.user_get(user_id)
 
@@ -61,10 +67,13 @@ class SessionsManager:
 
     def no_session_logout(self, token: str, redirect_on_logout: str = "/"):
         """
-        ## Session info
+        The no_session_logout function is used to logout user.
+        If there is no session, then it will redirect to login page.
 
-        Get detail about session
-        If there is not session. Then it will logout user.
+        :param self: Access variables that belongs to the class
+        :param token:str: Get the token from the cookie
+        :param redirect_on_logout:str=&quot;/&quot;: Redirect the user to a specific page after they have been logged out
+        :return: response, if session exists, else None
         """
         get_session = self.db.get(token)
 
@@ -79,10 +88,12 @@ class SessionsManager:
 
     def get_session(self, token: str):
         """
-        ## Session info
+        The get_session function retrieves the session object for a given token.
+        If there is no session, then it returns None.
 
-        Get detail about session
-        If there is not session. Then it will return None.
+        :param self: Access variables that belongs to the class
+        :param token:str: Get the session info
+        :return: Session object
         """
         get_session = self.db.get(token)
 
