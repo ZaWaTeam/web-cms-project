@@ -12,3 +12,34 @@
 
 - to get crashreport run `start.py`
 ### Project in development, so debug mode is active
+
+***
+
+## Config.ini template
+
+**For Mysql Driver**
+```
+  [DATABASE]
+  Driver = MySql
+  Host = localhost
+  Name = CMSProj
+  User = root
+  Password = root
+  Port = 8889
+
+  [DEVELOPMENT]
+  Debug = on
+  Host = 127.0.0.1
+  Port = 5000
+```
+**For SQLite Driver**
+```
+  [DATABASE]
+  Driver = Sqlite
+  Path = /path/to/database
+
+  [DEVELOPMENT]
+  Debug = on
+  Host = 127.0.0.1
+  Port = 5000
+```

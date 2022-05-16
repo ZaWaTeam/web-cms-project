@@ -2,7 +2,6 @@ from core.managers.logging import LoggingManager, Log
 from core.loaders.plugins import PluginLoader
 from core.loaders.permissions import PermissionsLoader
 
-from core.database.connect import CpDb
 from extentions.cli.responses import CLIResponses
 
 log_manager = LoggingManager()
