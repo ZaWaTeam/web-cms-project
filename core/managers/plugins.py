@@ -14,7 +14,8 @@ class PluginGeneric():
     """
 
     def __init__(self) -> None:
-        Log(sys.modules[self.__module__].__file__, 0)
+        # Log(sys.modules[self.__module__].__file__, 0)
+        pass
 
     def on_ready(self):
         pass
