@@ -21,7 +21,7 @@
     {% if application.user_is_authorized() %}
         Logged in as {{ application.user_is_authorized() }}
     {% else %}
-        Not logged in
+        Not logged in {{ application.user }}
     {% endif %}
 
     <!-- Footer -->
