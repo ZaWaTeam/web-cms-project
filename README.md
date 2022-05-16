@@ -20,27 +20,27 @@
 
 **For Mysql Driver**
 ```editorconfig
-  [DATABASE]
-  Driver = MySql
-  Host = localhost
-  Name = CMSProj
-  User = root
-  Password = root
-  Port = 8889
+[DATABASE]
+Driver = MySql
+Host = localhost
+Name = CMSProj
+User = root
+Password = root
+Port = 8889
 
-  [DEVELOPMENT]
-  Debug = on
-  Host = 127.0.0.1
-  Port = 5000
+[DEVELOPMENT]
+Debug = on
+Host = 127.0.0.1
+Port = 5000
 ```
 **For SQLite Driver**
 ```editorconfig
-  [DATABASE]
-  Driver = Sqlite
-  Path = /path/to/database
+[DATABASE]
+Driver = Sqlite
+Path = /path/to/database
 
-  [DEVELOPMENT]
-  Debug = on
-  Host = 127.0.0.1
-  Port = 5000
+[DEVELOPMENT]
+Debug = on
+Host = 127.0.0.1
+Port = 5000
 ```
