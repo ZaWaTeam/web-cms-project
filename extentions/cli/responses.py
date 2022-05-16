@@ -1,7 +1,6 @@
 from genericpath import isdir, isfile
 from importlib import import_module
 from os import listdir
-from typing import Optional
 # Rich
 from rich import print
 from rich.panel import Panel
@@ -10,7 +9,6 @@ from rich.console import Console
 # Core
 from core.configreader import DataBaseConfig
 from core.managers.logging import Log
-from core.managers.auth.permissions import PermissionsManagement
 from core.plugins.reader import PluginReader
 from core.managers.auth.user import UserManagement
 # Extentions
