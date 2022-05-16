@@ -151,5 +151,5 @@ class FileManager():
 
 class Service():
     @classmethod
-    def die(self, exception):
+    def die(self, exception: object):
         pass
