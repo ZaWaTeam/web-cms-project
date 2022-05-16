@@ -1,3 +1,4 @@
+import configparser
 from datetime import date, timedelta
 from flask import request
 from core.managers.auth.sessions import SessionsManager
@@ -5,6 +6,7 @@ from core.managers.hash import Hash
 from core.database.crud import users
 from core.managers.logging import Log
 from core.managers.auth.permissions import PermissionsManagement
+from core.configparse import config
 
 
 class UserManagement:
@@ -35,9 +37,16 @@ class UserManagement:
         args (Optional):
             - `**kwargs`: More information field.
         """
-        hash_password = self.password_hash.crypt(password=password)
+        if config.has_option("DEVELOPMENT", "HashTime"):
+            hash_password = self.password_hash.crypt(password=password,
+                                                     complexity=config.getint("DEVELOPMENT", "HashTime"))
+        else:
+            hash_password = self.password_hash.crypt(password=password)
         create_user = self.crud.user_create(
-            username=username, email=email, password=hash_password, group_id=group_id)
+            username=username,
+            email=email,
+            password=hash_password,
+            group_id=group_id)
 
         return create_user
 

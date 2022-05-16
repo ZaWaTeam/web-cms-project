@@ -10,7 +10,8 @@ Driver = Sqlite
 Path = subconf.sqlite3
 
 [DEVELOPMENT]
-Debug = on''')
+Debug = on
+HashTime = 13''')
 from core.managers.auth.permissions import PermissionsManagement
 from core.database.crud.groups import GroupsCrud
 from core.database.crud.users import UsersCrud
@@ -91,6 +92,12 @@ class TestingCMS(unittest.TestCase):
         self.assertEqual(perm, Permissions.get_or_none(Permissions.id == perm.id))
         self.assertTrue(permission_manager.check_group('*', group.id))
         self.assertTrue(permission_manager.check_permission('*', user.id))
+
+    def test_hashing(self):
+        Faker.seed(randint(1, 100))
+        user_manager = UserManagement()
+        user = user_manager.create_super_user(fake.user_name(), fake.email(), fake.password())
+        self.assertIn(b"$2b$13", user.password)
 
 
 if __name__ == '__main__':

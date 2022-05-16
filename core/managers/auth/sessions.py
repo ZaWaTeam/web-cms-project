@@ -3,6 +3,7 @@ from random import randint
 
 from flask import redirect, make_response, request
 
+from core.configparse import config
 from core.database.crud.sessions import SessionsCRUD
 from core.managers.exceptions import UserNotExists
 from core.managers.hash import Hash
@@ -33,8 +34,10 @@ class SessionsManager:
         token = str(randint(2200, 5000) + user_id)
 
         # Generate hashed session token
-        hashed_token = self.hasher.crypt(token)
-
+        if config.has_option("DEVELOPMENT", "HashTime"):
+            hashed_token = self.hasher.crypt(token, complexity=config.getint("DEVELOPMENT", "HashTime"))
+        else:
+            hashed_token = self.hasher.crypt(token)
         # Get user information
         device = request.user_agent
         ip = request.remote_addr
