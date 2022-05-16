@@ -9,4 +9,5 @@ from core.bootup import boot_up
 #
 if __name__ == "__main__":
     boot_up()
-    app.run(debug=config.getboolean("DEVELOPMENT", "Debug"), port=5001)
+    app.run(debug=config.getboolean("DEVELOPMENT", "Debug"), host=config.get(
+        "DEVELOPMENT", "Host"), port=config.get("DEVELOPMENT", "Port"))
