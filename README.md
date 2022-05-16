@@ -18,7 +18,7 @@
 ## Config.ini template
 
 **For Mysql Driver**
-  
+```
   [DATABASE]
   Driver = MySql
   Host = localhost
@@ -31,9 +31,9 @@
   Debug = on
   Host = 127.0.0.1
   Port = 5000
-
+```
 **For SQLite Driver**
-
+```
   [DATABASE]
   Driver = Sqlite
   Path = /path/to/database
@@ -42,3 +42,4 @@
   Debug = on
   Host = 127.0.0.1
   Port = 5000
+```
