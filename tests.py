@@ -47,6 +47,7 @@ class TestingCMS(unittest.TestCase):
 
         self.assertIsInstance(
             plugin_config, Configuration, msg="Failed to create plugin configuration")
+
         template_config = database_config.create_config(
             "active_template", "test")
 
