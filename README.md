@@ -1,6 +1,7 @@
 # https://python-webcms.readthedocs.io/en/latest/
 
-
+# Structure
+![scheme.drawio.svg](scheme.drawio.svg)
 
 # Install deps + run tests
 - `{python-executable} setup.py`
