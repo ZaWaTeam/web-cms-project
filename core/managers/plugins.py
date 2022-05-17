@@ -1,16 +1,9 @@
-import sys
-from typing import final
-
-from flask import request
-from core.managers.logging import Log
-from core.configreader import DataBaseConfig
-from core.application import app
 
 
 class PluginGeneric():
     """
       Plugin Generic \n
-      Method overrider
+      Plugin development interface. For building apps
     """
 
     def __init__(self) -> None:
@@ -18,6 +11,9 @@ class PluginGeneric():
         pass
 
     def on_ready(self):
+        pass
+
+    def on_request(self, request):
         pass
 
     def on_disable(self):
