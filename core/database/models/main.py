@@ -42,7 +42,8 @@ class Groups(pw.Model):
 
 class UserModel(pw.Model):
     """
-    WebCms User Model
+    The UserModel model class represents a user object with the following attributes:
+        id, username, email and password. The UserModel function also has a group attribute that is set to null by default.
     """
     id = pw.AutoField()
     username = pw.CharField(max_length=90, unique=True)
