@@ -14,7 +14,7 @@ class DataBaseConfig():
         :param self: Reference the current instance of the class
         :param config_name:str: Specify the name of the configuration
         :param value:str: Store the value of the configuration
-        :param exception:bool=False: Check if the config already exists
+        :param exception:bool=False: Check if the config already exists. If exists, it will raise an exception
         :return: The Configuration object
         """
 
