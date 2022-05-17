@@ -36,10 +36,14 @@ class Groups(pw.Model):
     class Meta:
         database = CpDb
 
+    def __repr__(self):
+        return f"Groups(id={self.id}, name={self.name})"
+
 
 class UserModel(pw.Model):
     """
-    WebCms User Model
+    The UserModel model class represents a user object with the following attributes:
+        id, username, email and password. The UserModel function also has a group attribute that is set to null by default.
     """
     id = pw.AutoField()
     username = pw.CharField(max_length=90, unique=True)
@@ -49,6 +53,13 @@ class UserModel(pw.Model):
 
     class Meta:
         database = CpDb
+
+    def __repr__(self):
+        return f"UserModel(id={self.id}, " \
+               f"username={self.username}, " \
+               f"email={self.email}, " \
+               f"password={self.password}, " \
+               f"group={self.group})"
 
 
 class Permissions(pw.Model):
@@ -63,5 +74,27 @@ class Permissions(pw.Model):
     class Meta:
         database = CpDb
 
+    def __str__(self):
+        return f'Permission(id={self.id}, ' \
+               f'permission={self.permission}, ' \
+               f'group={self.group}, ' \
+               f'user={self.user})'
 
-CpDb.create_tables([Configuration, Editables, Groups, UserModel, Permissions])
+
+class Sessions(pw.Model):
+    """
+    User login session.
+    """
+    id = pw.AutoField()
+    user = pw.ForeignKeyField(UserModel, on_delete="CASCADE")
+    device = pw.CharField(max_length=255)
+    ip = pw.IPField()
+    expires = pw.DateField()
+    status = pw.CharField(max_length=10, default="active")
+    token = pw.TextField()
+
+    class Meta:
+        database = CpDb
+
+
+CpDb.create_tables([Configuration, Editables, Groups, UserModel, Sessions, Permissions])

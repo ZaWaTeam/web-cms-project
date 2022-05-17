@@ -36,6 +36,6 @@ class PermissionsLoader:
             if get_perms:
                 for plugin_perms in get_perms:
                     self.permissions.append({
-                        "identy": plugin_perms["identy"],
+                        "identy": f'{aplugins}.{plugin_perms["identy"]}',
                         "description": plugin_perms["description"]
                     })

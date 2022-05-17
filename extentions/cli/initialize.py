@@ -1,6 +1,4 @@
 from time import sleep
-import rich
-from typing import Optional, List
 import typer
 
 from core.managers.logging import Log
@@ -16,7 +14,7 @@ def main():
 
 
 @app.command()
-def configs(limit: int = typer.Argument(20)):
+def configs(limit: int = typer.Argument(20, help="Shows list of configurations")):
     responses.get_configs_response(limit)
 
 

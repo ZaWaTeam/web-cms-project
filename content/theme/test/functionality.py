@@ -2,7 +2,6 @@ from core.managers.theme import ThemeManager
 
 
 class ThemeFunctionality(ThemeManager):
-
     # Theme definition
     theme_name: str = "test"
     theme_description: str = "some description"
@@ -11,17 +10,23 @@ class ThemeFunctionality(ThemeManager):
     # functions
 
     def on_load(self):
+        """
+        The on_load function is called when the page is loaded. It loads all of the static files (CSS, JS) and creates editable elements.
+
+        :param self: Access fields in the class
+        :return: None
+        """
         static = {
             "css": ["css/main.css"],
             "js": ["js/main.js"]
         }
-        editables: dict = [{"name": "MainText",
-                            "default": "Hello world", "type": 0},
-                           {
-            "name": "MainArray",
-            "default": ["Hello world1", "Hello world2"],
-            "type": 1
-        }]
+        editables: list[dict] = [{"name": "MainText",
+                                  "default": "Hello world", "type": 0},
+                                 {
+                                     "name": "MainArray",
+                                     "default": ["Hello world1", "Hello world2"],
+                                     "type": 1
+                                 }]
 
         self.load_static(static)
 

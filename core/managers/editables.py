@@ -1,4 +1,4 @@
-from core.database.crud import DatabaseOperations
+from core.database.crud.editables import DatabaseOperations
 from core.managers.logging import Log
 
 
@@ -34,7 +34,7 @@ class EditableManagers():
         # Database declare
         database = self.__database
 
-        create_crud = database.Editables.create(
+        create_crud = database.create(
             name=name, value=value, index=index)
 
         print(f"[log]: Creating argument '{name}' - status {create_crud}")
@@ -46,7 +46,7 @@ class EditableManagers():
 
         database = self.__database
 
-        edit_crud = database.Editables.edit(
+        edit_crud = database.edit(
             name=name, value=value, index=index)
 
         return edit_crud
@@ -56,6 +56,6 @@ class EditableManagers():
 
         database = self.__database
 
-        operation = database.Editables.get(name)
+        operation = database.get(name)
 
         return operation

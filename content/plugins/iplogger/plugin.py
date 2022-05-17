@@ -1,26 +1,26 @@
 from core.managers.plugins import PluginGeneric
-from core.plugins import generic
-from flask import request
+from core.plugins.generic import *
 
 
 class Plugin(PluginGeneric):
 
-    def __init__(self) -> None:
-        super().__init__()
-
     # This function calles when plugin is loaded and ready to work
     def on_ready(self):
-        generic.Debug.success("Plugin IPLOGGER successfully activated!")
+        Debug.success("Plugin IPLOGGER successfully activated!")
 
-    @generic.Decorators.on_request
-    def show_ip(request):
-        generic.Debug.success(
-            f"- Request from ip adress - {request.remote_addr}")
+    # This function called when somebody makes request to the server.
+    # This function runs even if user makes request to static files like: Styles, Scripts and Images too.
+    def on_request(self, request):
+        Debug.success(f"Request has been catched, {request.path}")
 
-    # This function will be callen when administrator from admin panel disables plugin
+    # This function called when request was maden.
+    # But this method will be called if request was made not for static files and media files
+    def on_fixedrequest(self, request):
+        Debug.success(f"Request affored: {request.path}")
 
+    # This function will be callen when administrator from WEBCMS admin disables plugin
     def on_disable(self):
-        generic.Debug.warning(
+        Debug.warning(
             "Plugin IPLOGGER successfully deactivated. GoodBye!")
 
     # This function will be callen when administrator deletes this plugin

@@ -4,7 +4,6 @@ Web CMS's core controller
 This is important file, and if you know what you doing. You can change something here.
 But it's too dangerous.
 """
-from collections import namedtuple
 import json
 from core.managers.exceptions import CoreHasDamage
 from defines import BASE_DIR

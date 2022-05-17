@@ -1,6 +1,4 @@
 from core.configreader import DataBaseConfig
-from core.application import app
-from flask import request
 from core.managers.logging import Log
 
 """
@@ -14,43 +12,6 @@ store_config = DataBaseConfig()
   Decorators
 * ========== *
 """
-
-
-class Decorators():
-    @classmethod
-    def user_is_authorized(self, func):
-        # Decorator for authorized user
-        # When it will be callen, decorator passes new arguments
-
-        # Arguments: user
-        # Argment contains information about user
-        def inner():
-
-            @app.before_request
-            def request_offered():
-                # Starting inner
-                if request.cookies.get("auth"):
-                    func(user=request)
-
-        return inner()
-
-    @classmethod
-    def on_request(self, func):
-        """
-        Decorator on request will be callen when site visitor or client makes request to server
-        when client enters site. This decorator will be triggered.
-
-        It passes some arguments:
-        `request: namedtuple` - request information
-        """
-        def inner():
-
-            @app.before_request
-            def request_offered():
-                # Starting request inner
-                func(request)
-
-        return inner()
 
 
 """
@@ -151,5 +112,5 @@ class FileManager():
 
 class Service():
     @classmethod
-    def die(self, exception):
+    def die(self, exception: object):
         pass
