@@ -1,8 +1,8 @@
 import os
-from defines import BASE_DIR
-from core.managers.logging import Log
 from core.configreader import DataBaseConfig
 from importlib import import_module
+
+from core.managers.logging import Log
 
 
 class PluginLoader():
@@ -81,7 +81,7 @@ class PluginLoader():
             else:
                 self.__call_override_plugin(function_name, **arguments)
 
-    def __call_override_plugin(self, name, **arguments):
+    def __call_override_plugin(self, name: str, function_name: str, **arguments):
 
         plugin_module = import_module(f"content.plugins.{name}.plugin")
 
@@ -89,7 +89,7 @@ class PluginLoader():
 
         # issubclass(plugin, PluginGeneric Managment)
 
-        getattr(plugin, name)(**arguments)
+        getattr(plugin, function_name)(**arguments)
 
     def __changed_database_plugins(self, changed_active_plugins):
         database = self.__db
@@ -152,4 +152,23 @@ class PluginLoader():
 
         return active_plugins
 
-    # def call_override(self, function_name: str, **arguments):
+    def call_override(self, function_name: str, **arguments):
+        """
+        ## Define and call override
+        Plugin function will call override method.
+        Made for plugin development
+
+        Args:
+            function_name (str): name of function which needs to be called
+            **arguments: pass arguments which needs to be passed to function
+        """
+        # Error handler. Catching it here
+        try:
+            # Code here
+            active_plugins = self.get_active_plugins()
+
+            for plugin in active_plugins:
+                self.__call_override_plugin(plugin, function_name, **arguments)
+
+        except Exception:
+            Log("Plugin loader containes some errors!", 2)

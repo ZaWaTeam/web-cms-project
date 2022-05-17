@@ -8,13 +8,14 @@ class DataBaseConfig():
     # Create new configuration
     def create_config(self, config_name: str, value: str, exception: bool = False):
         """
-        Create new config stored in database
-        ------------------------------------
+        The create_config function creates a new configuration stored in the database.
 
-        Options:
-        - config_name: str - Configuration name
-        - value: str - Value of configuration
 
+        :param self: Reference the current instance of the class
+        :param config_name:str: Specify the name of the configuration
+        :param value:str: Store the value of the configuration
+        :param exception:bool=False: Check if the config already exists. If exists, it will raise an exception
+        :return: The Configuration object
         """
 
         if exception:
@@ -25,7 +26,7 @@ class DataBaseConfig():
         return query
 
     # Create configuration with multiple values
-    def create_and_parse_config(self, config_name: str, value):
+    def create_and_parse_config(self, config_name: str, value: dict):
         """
         Create configuration with multiple values
         -----------------------------------------

@@ -3,9 +3,11 @@ from core.application import app
 from core.configparse import config
 #
 
-import core.bootup
+from core.bootup import boot_up
 
 
 #
 if __name__ == "__main__":
-    app.run(debug=config.getboolean("DEVELOPMENT", "Debug"))
+    boot_up()
+    app.run(debug=config.getboolean("DEVELOPMENT", "Debug"), host=config.get(
+        "DEVELOPMENT", "Host"), port=config.get("DEVELOPMENT", "Port"))

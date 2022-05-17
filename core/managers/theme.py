@@ -78,7 +78,6 @@ class ThemeManager():
             - `2` - dictionary
         """
         self.__editables.set_editable(name, value, index)
-        Log("Method called successfully", 0)
 
     def load_css(self, src: str = None, url: str = None):
         """
@@ -97,7 +96,6 @@ class ThemeManager():
             raise
 
         self.style_static.append(src)
-        Log(f"{src} loaded successfuly", 0)
 
     def load_script(self, src: str, url: str = None):
         """

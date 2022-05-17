@@ -1,4 +1,3 @@
-from collections import namedtuple
 from genericpath import isdir, isfile
 import json
 from defines import BASE_DIR
