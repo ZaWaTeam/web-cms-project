@@ -18,11 +18,7 @@
 
     {% endblock content %}
     <!-- End of content block -->
-    {% if application.user_is_authorized() %}
-        Logged in as {{ application.user_is_authorized() }}
-    {% else %}
-        Not logged in {{ application.user }}
-    {% endif %}
+
 
     <!-- Footer -->
     {% block footer %}{% endblock footer %}
