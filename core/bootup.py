@@ -1,18 +1,85 @@
+import importlib
 from core.managers.logging import LoggingManager, Log
 from core.loaders.plugins import PluginLoader
 from core.loaders.permissions import PermissionsLoader
+from admin import load_panel
 
 from extentions.cli.responses import CLIResponses
 
 log_manager = LoggingManager()
 
-# Routers
+# Helper class
+
+
+class WebcmsBootup:
+    """
+    ## Webcms bootup
+
+    This is helper class which will take place in loading components of app
+    This class makes code bit shorter and comfortable to use.
+    Commands can be executed step by step.
+    """
+
+    @classmethod
+    def load_module(cls, module: str):
+        """
+        ## Load module.
+
+        Method will load module. If you need to load module somewhere deep in code.
+        And do not call nothing from module. This method can be useful.
+
+        #### Notice: Current method loads modules only in `core` directory.
+        No need to specify `core` in module argument!
+
+        You can call something from module. It's supports it.
+        """
+        # Check if module starts with core.(import path)
+        if module.split(".")[0] == "core":
+            # Load module
+            Log(f"Bootup module {module} load warning!", 1)
+            Log("No need to specify core in path!", 1)
+            module_load = importlib.import_module(module)
+
+            return module_load
+
+        # Load core module if module don't has core in start
+        module_load = importlib.import_module(f"core.{module}")
+
+        return module_load
+
+    @classmethod
+    def load_router(cls, router_name: str):
+        """
+        ## Load mvc router.
+
+        Method will load router.
+        This method makes code much comfortable and stable.
+        No need to use `from core.mvc.routes import router`
+        You can call this method and specify router filename.
+
+        #### Notice! This method loads from `core.mvc.routes` path!
+        Write only filename without extentions and do not use full path.
+        """
+        # Load mvc router
+        try:
+
+            router_load = importlib.import_module(
+                f"core.mvc.routes.{router_name}")
+
+            return router_load
+
+        except ModuleNotFoundError:
+
+            return Log(f"WebcmsBootup load_router error! Cannot load route '{router_name}' due to no router named '{router_name}'", 2)
+
+# Bootup function
 
 
 def boot_up():
     """
     The boot_up function is called when the program is launched. It initializes all of the necessary
     components for the app to run, including loading permissions and plugins.
+    If bootup has errors. Firstly it will contain code 0E1x that means bootup damaged.
 
     :return: None
     """
@@ -30,9 +97,10 @@ def boot_up():
 
     plugins.initialize_plugins()
 
-    from core.loaders import requests
-    from core import theme_app
-    from core.mvc.routes import main
+    # Load Control Panel
+    load_panel()
 
-
-# Routers
+    # Module and router boot up...
+    WebcmsBootup.load_module("loaders.requests")
+    WebcmsBootup.load_module("theme_app")
+    WebcmsBootup.load_router("main")
