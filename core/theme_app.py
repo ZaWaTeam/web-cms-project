@@ -13,6 +13,7 @@ class Application():
 
     title = "Something"
     request = request
+    user: str
 
     def __init__(self) -> None:
         self.active_template = config.get_config("active_template")
