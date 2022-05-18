@@ -35,3 +35,16 @@ class SessionsCRUD(users.UsersCrud):
             Sessions.token == token).get_or_none()
 
         return query
+
+    @classmethod
+    def exists(cls, token: str):
+        """
+        The function checks for session existing. If session not exists, it returns none.
+
+        :param cls: Refer to the current instance of the class in which the method is used
+        :param token:str: Get the token from the user
+        :return: Session object
+        """
+        query = Sessions.get_or_none(Sessions.token == token)
+
+        return query
