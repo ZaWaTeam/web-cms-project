@@ -19,20 +19,29 @@ plugin_loader = PluginLoader()
 # Requests
 @app.before_request
 def handle_before():
-    # Session checkup
+    # User checkup
     if user_manager.is_authenticated(request):
-        session_checkup = user_manager.session_checkup(request)
 
         # Get user and set
         usr = user_manager.get_current_user(request)
         setattr(Application, "user", usr)
 
-        return session_checkup
+    else:
+        setattr(Application, "user", None)
 
     plugin_loader.call_override("on_request", request=request)
 
     if "proj_stat" not in request.path.split("/"):
         plugin_loader.call_override("on_fixedrequest", request=request)
+
+
+@app.before_request
+def session_checkup():
+    # Check session in every request
+    if "proj_stat" not in request.path.split("/"):
+        session_checkup = user_manager.session_checkup(request)
+
+        return session_checkup
 
 # @app.after_request
 # def handle_after():
