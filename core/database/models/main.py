@@ -1,6 +1,7 @@
 import peewee as pw
 from core.database.connect import CpDb
 
+
 # Configuration database
 
 
@@ -97,4 +98,13 @@ class Sessions(pw.Model):
         database = CpDb
 
 
-CpDb.create_tables([Configuration, Editables, Groups, UserModel, Sessions, Permissions])
+class Logs(pw.Model):
+    """
+    Logs login model
+    """
+    id = pw.AutoField()
+    user = pw.ForeignKeyField(UserModel, on_delete="CASCADE")
+    timestamp = pw.DateTimeField()
+
+
+CpDb.create_tables([Configuration, Editables, Groups, UserModel, Sessions, Permissions, Logs])
