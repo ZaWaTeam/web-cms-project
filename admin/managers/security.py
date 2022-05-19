@@ -2,7 +2,6 @@ from typing import Union
 
 from flask import redirect, request
 from core.managers.auth import user, permissions, groups
-from core.managers.logging import Log
 
 
 class SecurityManager:
@@ -112,3 +111,53 @@ class SecurityManager:
             return respond
 
         return will_be_exectued
+
+    @classmethod
+    def logged_or_redirect(cls, redirect_url: str, will_be_executed):
+        """
+        ## User authenticated, or else redirect
+
+        If user is authenticated. Method will execute argument `will_be_executed`
+        If user not authenticated. Method will redirect him to url which you will set in argument `redirect_url`
+        This method controlls authenticated user or not. And triggers 1 argument of 2 given
+
+        Args:
+            redirect_url (str): If user is not authenticated, method will redirect him to url passed in this argument
+            will_be_executed (any): You can pass here flask response methods. This argument will be executed if user is authenticated in system
+
+        Returns:
+            redirect_url (str): If user is not authenticated
+            will_be_executed (any): If user is authenticated in system
+        """
+
+        account = cls.user_authenticated()
+
+        if account:
+            return redirect(redirect_url)
+
+        return will_be_executed
+
+    @classmethod
+    def logged_or_respond(cls, respond_execute, will_be_executed):
+        """
+        ## User authenticated, or else execute `respond_execute`
+
+        If user is authenticated. Method will execute argument `will_be_executed`
+        If user not authenticated. Method will execute `respond_execute` him to url which you will set in argument `respond_execute`
+        This method controlls authenticated user or not. And triggers 1 argument of 2 given
+
+        Args:
+            respond_execute (str): If user is not authenticated, method will redirect him to url passed in this argument
+            will_be_executed (any): You can pass here flask response methods. This argument will be executed if user is authenticated in system
+
+        Returns:
+            respond_execute (str): If user is not authenticated
+            will_be_executed (any): If user is authenticated in system
+        """
+
+        account = cls.user_authenticated()
+
+        if account:
+            return respond_execute
+
+        return will_be_executed
