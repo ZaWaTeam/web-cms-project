@@ -107,5 +107,14 @@ class Logs(pw.Model):
     raw_data = pw.TextField()
     timestamp = pw.DateTimeField()
 
+    class Meta:
+        database = CpDb
+
+    def __repr__(self):
+        return f"Log(id={self.id}, " \
+               f"user={self.user}, " \
+               f"raw_data={self.raw_data}, " \
+               f"timestamp={self.timestamp})"
+
 
 CpDb.create_tables([Configuration, Editables, Groups, UserModel, Sessions, Permissions, Logs])
