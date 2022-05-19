@@ -104,6 +104,7 @@ class Logs(pw.Model):
     """
     id = pw.AutoField()
     user = pw.ForeignKeyField(UserModel, on_delete="CASCADE")
+    raw_data = pw.TextField()
     timestamp = pw.DateTimeField()
 
 
