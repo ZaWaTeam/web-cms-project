@@ -18,14 +18,14 @@ class WebcmsAdmin:
     # Managers variable. Stores list of managers
 
     @classmethod
-    def load_mvc_router(cls, router_name: str):
+    def load_router(cls, router_name: str):
         """
         ## Load Routes
 
         Method load_mvc_router(router_name: str) belongs to WebcmsAdmin.
         Method loads routers of mvc directory. It will replace `from admin.mvc import router`
         """
-        get_router = importlib.import_module(f"admin.mvc.{router_name}")
+        get_router = importlib.import_module(f"admin.mvc.routes.{router_name}")
 
         # Log executed code
         Log(f"Sucessfully initialized admin route: \"{router_name}\"", 3)
@@ -68,4 +68,5 @@ def load_panel():
     Panel includes own loaders and manager, which will be loaded with this function.
     All you need to do, call this magical function in `core/bootup.py` and everything is done.
     """
-    WebcmsAdmin.load_mvc_router("routes")
+    WebcmsAdmin.load_router("routes")
+    WebcmsAdmin.load_router("forms")

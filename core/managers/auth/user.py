@@ -78,7 +78,7 @@ class UserManagement:
             Log("Successfully created new super user!", 3)
             return new_user
 
-    def authenticate_user(self, required_field: str, password: str):
+    def authenticate_user(self, required_field: str, password: str, response_on_auth: str):
         """
         The authenticate_user function takes in a required_field and password.
         It then verifies that the user exists, and if so, checks to see if the password matches.
@@ -104,7 +104,7 @@ class UserManagement:
 
         # Authentication step 03
         authenticate = self.session.start_session(
-            verify_user.id, date.today() + timedelta(weeks=5))
+            verify_user.id, date.today() + timedelta(weeks=5), response_on_auth)
 
         return authenticate
 
@@ -136,6 +136,9 @@ class UserManagement:
         :return: The value of the get_session variable
         """
         user_account = req.cookies.get("auth")
+
+        if not user_account:
+            return
 
         get_session = self.session.no_session_logout(user_account)
 

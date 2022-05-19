@@ -22,7 +22,7 @@ class PageController(View):
         of our app object such as config settings and other methods we have defined on it.
 
         :param self: Access variables that belongs to the class
-        :return: HTML string
+        :return: HTTP RESPONSE
         """
         page = request.args.get("p")
         # Render template

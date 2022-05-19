@@ -19,7 +19,7 @@ class SessionsManager:
     db = SessionsCRUD()
     hasher = Hash()
 
-    def start_session(self, user_id: int, life_time: date, redirect_to: str = "/"):
+    def start_session(self, user_id: int, life_time: date, response: str):
         """
         The start_session function creates a new session for the user.
         It takes in two parameters, user_id and life_time.
@@ -41,7 +41,8 @@ class SessionsManager:
 
         # Generate hashed session token
         if config.has_option("DEVELOPMENT", "HashTime"):
-            hashed_token = self.hasher.crypt(token, complexity=config.getint("DEVELOPMENT", "HashTime"))
+            hashed_token = self.hasher.crypt(
+                token, complexity=config.getint("DEVELOPMENT", "HashTime"))
         else:
             hashed_token = self.hasher.crypt(token)
         # Get user information
@@ -54,11 +55,11 @@ class SessionsManager:
 
         # Failed to store in database
         if not save_session:
-            return Log("Cannot store session! Exit code: SESSION_STORE_FAILED", 2)
-
+            Log("Cannot store session! Exit code: SESSION_STORE_FAILED", 2)
+            return False
         # Create cookie
 
-        response = make_response(redirect(redirect_to))
+        response = make_response(response)
 
         response.set_cookie("auth", hashed_token, expires=life_time)
 
@@ -75,10 +76,10 @@ class SessionsManager:
         :param redirect_on_logout:str=&quot;/&quot;: Redirect the user to a specific page after they have been logged out
         :return: response, if session exists, else None
         """
-        get_session = self.db.get(token)
+        get_session = self.db.exists(token=token)
 
         if get_session:
-            return None
+            return
 
         response = make_response(redirect(redirect_on_logout))
 
