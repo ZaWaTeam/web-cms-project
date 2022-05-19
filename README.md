@@ -5,7 +5,7 @@
 
 # Install deps + run tests
 - `{python-executable} setup.py`
-# IF BCRYPT FAILS, install this: [https://stackoverflow.com/questions/44951456/pip-error-microsoft-visual-c-14-0-is-required](Here)
+# IF BCRYPT FAILS, install this: [Here](https://stackoverflow.com/questions/44951456/pip-error-microsoft-visual-c-14-0-is-required)
 # Start Webserver
 - for mac/linux: `python3 main.py`
 
