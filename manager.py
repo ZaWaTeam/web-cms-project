@@ -9,7 +9,6 @@
    |\________\       \ \_______\ \_______\ \__\ 
     \|_______|        \|_______|\|_______|\|__|
 """
-import rich
 from extentions.cli import initialize
 
 if __name__ == "__main__":
