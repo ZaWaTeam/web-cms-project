@@ -1,0 +1,5 @@
+en:
+  on_ready: Plugin IPLOGGER successfully activated!
+  on_request: Request has been catched, ip - {0}
+  on_fixedrequest: "Request afforded: {0}"
+  on_disable: Plugin IPLOGGER successfully deactivated. GoodBye!

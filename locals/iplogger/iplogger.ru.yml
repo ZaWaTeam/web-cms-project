@@ -1,0 +1,5 @@
+ru:
+  on_ready: Плагин IPLOGGER успешно активирован!
+  on_request: Запрос получен, ip - {0}
+  on_fixedrequest: "Запрос выполнен: {0}"
+  on_disable: Плагин IPLOGGER успешно деактивирован. Пока!

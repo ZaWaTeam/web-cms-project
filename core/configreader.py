@@ -90,8 +90,7 @@ class DataBaseConfig():
             db.Configuration.name == config_name)
 
         if query is None:
-            raise ConfigurationNotExistsError(
-                configname=config_name)
+            raise ConfigurationNotExistsError(config_name)
 
         parse = json.loads(query.value)
 
@@ -165,13 +164,11 @@ class DataBaseConfig():
 
         if not mirror:
             if query is not None:
-                raise ConfigurationAlreadyExistsError(
-                    configname=config_name)
+                raise ConfigurationAlreadyExistsError(config_name)
 
             return not bool(query)
 
         if query is None:
-            raise ConfigurationNotExistsError(
-                configname=config_name)
+            raise ConfigurationNotExistsError(config_name)
 
         return bool(query)

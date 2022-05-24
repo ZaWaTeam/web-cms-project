@@ -1,11 +1,18 @@
 import importlib
+import os.path
+
+from core.configparse import config
+from core.managers.lang import LanguageManager
 from core.managers.logging import LoggingManager, Log
 from core.loaders.plugins import PluginLoader
 from core.loaders.permissions import PermissionsLoader
 from admin import load_panel
 
 from extentions.cli.responses import CLIResponses
+import i18n
+import pathlib
 
+lm = LanguageManager('cms')
 log_manager = LoggingManager()
 
 # Helper class
@@ -69,8 +76,7 @@ class WebcmsBootup:
             return router_load
 
         except ModuleNotFoundError:
-
-            return Log(f"WebcmsBootup load_router error! Cannot load route '{router_name}' due to no router named '{router_name}'", 2)
+            return Log(lm.get('bootup_cannot_load_route').format(router_name), 2)
 
 # Bootup function
 
@@ -86,8 +92,7 @@ def boot_up():
     # CLI text
     cli_text = CLIResponses()
     cli_text.main_response()
-
-    Log("Initializing routers...", 0)
+    Log(lm.get('bootup_init'), 0)
 
     # Initialize
     permissions = PermissionsLoader()
