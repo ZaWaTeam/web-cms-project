@@ -2,6 +2,7 @@ import unittest
 
 from flask import Request
 import mock
+
 with open('config.ini', 'w+') as f:
     f.write('''[DATABASE]
 Driver = Sqlite
@@ -22,7 +23,6 @@ class TestingSecurity(unittest.TestCase):
         mk.cookies = 'auth=test'
         with mock.patch("admin.managers.security.SecurityManager.request", mk):
             self.assertFalse(SecurityManager.user_authenticated())
-
 
 
 if __name__ == '__main__':

@@ -1,3 +1,5 @@
+from typing import Union
+
 from core.database.models import main as db
 from core.managers.exceptions import ConfigurationAlreadyExistsError, ConfigurationNotExistsError
 import json
@@ -26,7 +28,7 @@ class DataBaseConfig():
         return query
 
     # Create configuration with multiple values
-    def create_and_parse_config(self, config_name: str, value: dict):
+    def create_and_parse_config(self, config_name: str, value: Union[list, dict]):
         """
         Create configuration with multiple values
         -----------------------------------------
