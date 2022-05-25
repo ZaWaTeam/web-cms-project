@@ -2,6 +2,7 @@
 WEBCMS CONTROL PANEL
 """
 import importlib
+from core.managers.lang import LanguageManager
 
 from core.managers.logging import Log
 
@@ -16,6 +17,7 @@ class WebcmsAdmin:
     Commands will be completed step by step.
     """
     # Managers variable. Stores list of managers
+    lang_manager = LanguageManager()
 
     @classmethod
     def load_router(cls, router_name: str):
@@ -28,7 +30,7 @@ class WebcmsAdmin:
         get_router = importlib.import_module(f"admin.mvc.routes.{router_name}")
 
         # Log executed code
-        Log(f"Sucessfully initialized admin route: \"{router_name}\"", 3)
+        Log(cls.lang_manager.get("router_loaded", route=router_name), 3)
 
         return get_router
 
