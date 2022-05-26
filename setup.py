@@ -1,5 +1,5 @@
 from core.configreader import DataBaseConfig
-from core.utils.func import input
+from core.utils.funcs import input
 
 print(r"""----------------------------------------------------
                                 _               
@@ -20,6 +20,10 @@ while a not in ('1', '2'):
     print('Invalid choice!')
     a = input('>>> ')
 if a == '1':
+    """
+    Sets config.ini to default values, and sets active_plugins=[], and active_template=test
+    """
+
     print("Installing quick version...\n")
     with open('config.ini', 'w+') as f:
         f.write(f'''[DATABASE]
@@ -39,6 +43,10 @@ Port = 5000''')
         template_config = database_config.create_config(
             "active_template", "test")
 elif a == '2':
+    """
+    Asks for all options in config.ini also allows to set active_plugins, active_template
+    """
+
     print("Custom installation, press enter to use default of option\n\n")
     print("[DATABASE] Category:")
     db = input('Database type (Sqlite): ', 'Sqlite')

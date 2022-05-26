@@ -1,14 +1,16 @@
 from flask import send_from_directory
 from core.application import app
 from core.configreader import DataBaseConfig
+from core.managers.lang import LanguageManager
 from core.managers.logging import Log
 from core.mvc.controllers.main import MainController, PageController
 from defines import BASE_DIR
 
 controllers = {"main": MainController(), "page": PageController()}
 database_config = DataBaseConfig()
+lm = LanguageManager()
 
-Log("Successfully initialized router [bold]main[/bold]", 0)
+Log(lm.get('bootup_router_init_main'), 0)
 
 
 @app.route("/proj_stat/<path:filename>")

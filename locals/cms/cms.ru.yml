@@ -1,4 +1,11 @@
 ru:
-  bootup_init: Инициализация роутера...
-  bootup_banner_upper: Запуск системы Web CMS...
-  bootup_cannot_load_route: WebcmsBootup load_router error! Невозможно загрузить путь '{0}' из-за того что его неть
+  admin_route_init_success: 'Успешно инициализирован маршрут администратора: "{0}"'
+  admin_list_database_conf: Список конфигураций базы данных
+  admin_rows_limit: Отображение рядов {0}
+  admin_database_name: Имя
+  admin_database_value: Значение
+  bootup_init: Инициализация маршрутизаторов ...
+  bootup_banner_upper: Система запуска Web CMS ...
+  bootup_router_init_main: Успешно инициализированный маршрутизатор [bold]main[/bold]
+  bootup_cannot_load_route: WebCMSBOOTUP LOAD_ROUTER Ошибка!
+  Не удается загрузить маршрут '{0}' из -за отсутствия маршрутизатора с именем '{0}'

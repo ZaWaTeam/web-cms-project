@@ -8,12 +8,13 @@ from rich.table import Table
 from rich.console import Console
 # Core
 from core.configreader import DataBaseConfig
+from core.managers.lang import LanguageManager
 from core.managers.logging import Log
 from core.plugins.reader import PluginReader
 from core.managers.auth.user import UserManagement
 # Extentions
 from extentions.cli.helpers import find_filter
-
+lm = LanguageManager()
 
 class CLIResponses():
 
@@ -31,7 +32,7 @@ class CLIResponses():
             "[red]| |/ |/ / /___/ /_/ /  / /___/ /  / /___/ / \n" \
             "[red]|__/|__/_____/_____/   \____/_/  /_//____/  \n"
 
-        print(Panel("[green] Web CMS Launching system... [/green] \n" + art_str,
+        print(Panel(f"[green] {lm.get('bootup_banner_upper')} [/green] \n" + art_str,
                     title="[bold cyan] Web CMS [/bold cyan]", subtitle="[bold cyan] V 1.0.0 [/bold cyan]"))
 
     def get_configs_response(self, limit: int):
@@ -39,11 +40,11 @@ class CLIResponses():
         configurations = self.config.get_configs(limit)
 
         # define table
-        table = Table(title="List of database configurations",
-                      caption=f"Displaying {limit} rows")
+        table = Table(title=lm.get('admin_list_database_conf'),
+                      caption=lm.get('admin_rows_database_conf'))
         table.add_column("ID", style="cyan")
-        table.add_column("name", style="yellow")
-        table.add_column("value")
+        table.add_column(lm.get('admin_database_name'), style="yellow")
+        table.add_column(lm.get('admin_database_value'))
 
         for config in configurations:
             table.add_row(str(config.id), f"{config.name}", config.value)
@@ -62,7 +63,6 @@ class CLIResponses():
         try:
             configuration.create_config(name, value)
             Log(f"Configuration [bold]{name}[/bold] created successfully with value [italic]{value}[/italic]", 3)
-
         except Exception:
             Log(f"Configuration named {name} already exists!", 2)
 

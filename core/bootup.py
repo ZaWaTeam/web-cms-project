@@ -1,18 +1,13 @@
 import importlib
-import os.path
 
-from core.configparse import config
+from admin import load_panel
+from core.loaders.permissions import PermissionsLoader
+from core.loaders.plugins import PluginLoader
 from core.managers.lang import LanguageManager
 from core.managers.logging import LoggingManager, Log
-from core.loaders.plugins import PluginLoader
-from core.loaders.permissions import PermissionsLoader
-from admin import load_panel
-
 from extentions.cli.responses import CLIResponses
-import i18n
-import pathlib
 
-lm = LanguageManager('cms')
+lm = LanguageManager()
 log_manager = LoggingManager()
 
 # Helper class
