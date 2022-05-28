@@ -1,9 +1,10 @@
-admin_route_init_success: 'Sucessfully initialized admin route: "{0}"'
-admin_list_database_conf: List of database configurations
-admin_rows_limit: Displaying {0} rows
-admin_database_name: Name
-admin_database_value: Value
-bootup_init: Initializing routers...
-bootup_banner_upper: Web CMS Launching system...
-bootup_router_init_main: Successfully initialized router [bold]main[/bold]
-bootup_cannot_load_route: WebcmsBootup load_router error! Cannot load route '{0}' due to no router named '{0}'
+en:
+  admin_route_init_success: 'Sucessfully initialized admin route: "{0}"'
+  admin_list_database_conf: List of database configurations
+  admin_rows_limit: Displaying {0} rows
+  admin_database_name: Name
+  admin_database_value: Value
+  bootup_init: Initializing routers...
+  bootup_banner_upper: Web CMS Launching system...
+  bootup_router_init_main: Successfully initialized router [bold]main[/bold]
+  bootup_cannot_load_route: WebcmsBootup load_router error! Cannot load route '{0}' due to no router named '{0}'

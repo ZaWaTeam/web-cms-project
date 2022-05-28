@@ -11,13 +11,21 @@ class LanguageManager:
         """
         Creates language manager that will be used for translating.
 
-
         :param dir_name: directory of translations in locals/*
         :param fallback_locale: locale that will be used if DEVELOPMENT[Language] parameter is not found
         """
-        i18n.load_path.append(os.path.join(pathlib.Path().resolve(), f'locals\\{dir_name}'))
-        self.locale = config.get("DEVELOPMENT", "Language", fallback=fallback_locale)
+        # Load locale path
+        i18n.load_path.append(os.path.join(
+            pathlib.Path().resolve(), f'locals/{dir_name}'))
+
+        # Get locale configuration
+        self.locale = config.get(
+            "DEVELOPMENT", "Language", fallback=fallback_locale)
+
+        # Set name of locale directory
         self.dir_name = dir_name
+
+        # Set locale configuration
         i18n.config.set('locale', self.locale)
 
     def get(self, str_name: str, locale=None) -> str:
@@ -34,4 +42,4 @@ class LanguageManager:
 
         if locale is None:
             locale = self.locale
-        return i18n.t(f"{self.dir_name}.{str_name}", locale=locale)
+        return i18n.t(f"{self.dir_name}.{str_name}")

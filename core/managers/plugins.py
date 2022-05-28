@@ -10,10 +10,16 @@ class PluginGeneric():
         # Log(sys.modules[self.__module__].__file__, 0)
         pass
 
+    def on_enable(self):
+        pass
+
     def on_ready(self):
         pass
 
     def on_request(self, request):
+        pass
+
+    def on_fixedrequest(self, request):
         pass
 
     def on_disable(self):

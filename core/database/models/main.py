@@ -1,5 +1,6 @@
 import peewee as pw
 from core.database.connect import CpDb
+from core.plugins.model import ModelController
 
 
 # Configuration database
@@ -117,4 +118,8 @@ class Logs(pw.Model):
                f"timestamp={self.timestamp})"
 
 
-CpDb.create_tables([Configuration, Editables, Groups, UserModel, Sessions, Permissions, Logs])
+# Create base model
+base_models = [Configuration, Editables, Groups,
+               UserModel, Sessions, Permissions, Logs]
+
+CpDb.create_tables(base_models)

@@ -1,7 +1,3 @@
-from googletrans import Translator
-import yaml
-from pprint import pprint
-
 wrap = input
 
 
@@ -21,16 +17,20 @@ def input(prompt: str = '', default=None) -> str:
         return inp
 
 
-def populate_yml_google_translate(in_file: str):
-    translator = Translator()
-    with open(in_file) as f:
-        templates = yaml.safe_load(f)
-    result = {'ru': dict()}
-    for key in templates['en'].keys():
-        result['ru'].update({key: translator.translate(templates['en'][key], dest='ru').text})
-    with open('result.yml', 'w+', encoding='utf-8') as f:
-        yaml.dump(result, f, allow_unicode=True, sort_keys=False)
+# def populate_yml_google_translate(in_file: str):
+#     translator = Translator()
+
+#     with open(in_file) as f:
+#         templates = yaml.safe_load(f)
+#     result = {'ru': dict()}
+
+#     for key in templates['en'].keys():
+#         result['ru'].update({key: translator.translate(
+#             templates['en'][key], dest='ru').text})
+
+#     with open('result.yml', 'w+', encoding='utf-8') as f:
+#         yaml.dump(result, f, allow_unicode=True, sort_keys=False)
 
 
-if __name__ == '__main__':
-    populate_yml_google_translate('../../locals/iplogger/iplogger.en.yml')
+# if __name__ == '__main__':
+#     populate_yml_google_translate('../../locals/iplogger/iplogger.en.yml')
