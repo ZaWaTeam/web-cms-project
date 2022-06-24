@@ -1,6 +1,6 @@
 alabaster==0.7.12
 autopep8==1.6.0
-Babel==2.10.1
+Babel==2.10.3
 bcrypt==3.2.2
 certifi==2022.6.15
 cffi==1.15.0
