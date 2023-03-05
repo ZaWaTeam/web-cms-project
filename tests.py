@@ -123,6 +123,6 @@ class TestingCMS(unittest.TestCase):
         self.assertEqual(log1.raw_data, str(data1))
         self.assertEqual(log2.raw_data, str(data2))
 
-
+# testing pipeline
 if __name__ == '__main__':
     unittest.main()
