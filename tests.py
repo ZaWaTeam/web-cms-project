@@ -3,9 +3,6 @@ import sys
 import unittest
 from random import randint
 from subprocess import Popen, PIPE
-
-from admin.managers.logs import LogsManager
-
 with open('config.ini', 'w+') as f:
     f.write('''[DATABASE]
 Driver = Sqlite
@@ -14,6 +11,9 @@ Path = subconf.sqlite3
 [DEVELOPMENT]
 Debug = on
 HashTime = 13''')
+from admin.managers.logs import LogsManager
+
+
 from core.managers.auth.permissions import PermissionsManagement
 from core.database.crud.groups import GroupsCrud
 from core.database.crud.users import UsersCrud
