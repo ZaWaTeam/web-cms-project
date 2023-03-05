@@ -54,7 +54,9 @@
                 url: "/cpanel/themes/",
                 icon: "bi bi-image"
             },
-          ]
+          ],
+          {% block datas %}
+          {% endblock datas %}
         }
       },
       methods: {
@@ -63,6 +65,10 @@
         },
         {% block methods %}
         {% endblock methods %}
+      },
+      mounted() {
+        {% block mounted %}
+        {% endblock mounted %}
       },
       computed: {
         {% block computeds %}
