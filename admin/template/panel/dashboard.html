@@ -43,6 +43,24 @@
                 </div>
             </div>
         </div>
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card border-success mb-3">
+                    <div class="card-body text-success">
+                      <h5>Active plugins</h5>
+                      <span class="fs-3">{{ sysinfo.active_plugins | escape }}</span>
+                    </div>
+                  </div>
+            </div>
+            <div class="col">
+                <div class="card border-info mb-3">
+                    <div class="card-body text-info">
+                      <h5>Available plugins</h5>
+                      <span class="fs-3">{{ sysinfo.available_plugins | escape }}</span>
+                    </div>
+                  </div>
+            </div>
+        </div>
             <div class="chart mt-3">
                 {% include 'parts/dashboard_graph_cpu.html' %}
                 {% include 'parts/dashboard_graph_memory.html' %}
