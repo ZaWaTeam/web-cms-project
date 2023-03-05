@@ -132,7 +132,7 @@ class PluginLoader():
 
     def initialize_plugins(self):
         # Start plugins
-        load_plugins = self.__start_plugins()
+        self.__start_plugins()
 
         return True
 
