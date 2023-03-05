@@ -17,17 +17,23 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h5>Memory</h5>
+                    <h5>Memory usage</h5>
                     [[ getMemoryPercentage ]]%
                     <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" :class="{ 'bg-danger': (getDiskPercentage > 60) }" :style="{ 'width': `${getMemoryPercentage}%` }"></div>
+                        <div class="progress-bar" :class="{ 'bg-danger': (getMemoryPercentage > 60) }" :style="{ 'width': `${getMemoryPercentage}%` }"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card">
-                <div class="card-head">Disk usage</div>
+                <div class="card-body">
+                    <h5>CPU usage</h5>
+                    [[ geteCPUPercentage ]]%
+                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar" :class="{ 'bg-danger': (geteCPUPercentage > 60) }" :style="{ 'width': `${geteCPUPercentage}%` }"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -44,5 +50,8 @@ getDiskPercentage() {
 getMemoryPercentage() {
     return {{ sysinfo.memory }};
 },
+geteCPUPercentage() {
+    return {{ sysinfo.cpu }};
+}
 
 {% endblock computeds %}
