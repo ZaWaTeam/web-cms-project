@@ -43,4 +43,4 @@ class MainView(View):
 class MemoryView(MethodView):
     def dispatch_request(self):
         cpu = psutil.cpu_percent()
-        return SecurityManager.permission_or_respond(PERMISSIONS.LOGIN_TO_PANEL, None, json.dumps({"cpu": round(cpu)}))
+        return SecurityManager.permission_or_respond(PERMISSIONS.LOGIN_TO_PANEL, None, json.dumps({"cpu": cpu}))
