@@ -1,7 +1,48 @@
 {% extends 'tpl/index.html' %}
 {% block content %}
 
-{{ user.email }}
-{{ request.path }}
+<div class="container pt-3">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Disk usage</h5>
+                    [[ getDiskPercentage ]]%
+                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar" :class="{ 'bg-danger': (getDiskPercentage > 60) }" :style="{ 'width': `${getDiskPercentage}%` }"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Memory</h5>
+                    [[ getMemoryPercentage ]]%
+                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar" :class="{ 'bg-danger': (getDiskPercentage > 60) }" :style="{ 'width': `${getMemoryPercentage}%` }"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-head">Disk usage</div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 {% endblock content %}
+
+{% block computeds %}
+
+getDiskPercentage() {
+    return {{ sysinfo.disk.percent }};
+},
+getMemoryPercentage() {
+    return {{ sysinfo.memory }};
+},
+
+{% endblock computeds %}
