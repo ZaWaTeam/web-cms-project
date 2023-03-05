@@ -11,6 +11,11 @@ Path = subconf.sqlite3
 [DEVELOPMENT]
 Debug = on
 HashTime = 13''')
+from os import listdir
+from os.path import isfile, join
+
+onlyfiles = [f for f in listdir('.') if isfile(join('.', f))]
+raise Exception(str(onlyfiles))
 from admin.managers.logs import LogsManager
 
 
