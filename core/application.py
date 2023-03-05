@@ -12,6 +12,6 @@ app = Flask(__name__, template_folder=f"{BASE_DIR}/content/theme/{main_template}
 
 # Admin blueprint
 admin = Blueprint("cpanel",
-                  __name__, template_folder=f"{BASE_DIR}/admin/template", static_folder=f"{BASE_DIR}/admin/statics", url_prefix="/cpanel")
+                  __name__, template_folder=f"{BASE_DIR}/admin/template", static_folder=f"{BASE_DIR}/admin/template/assets", url_prefix="/cpanel")
 
 # Registering admin blueprint
