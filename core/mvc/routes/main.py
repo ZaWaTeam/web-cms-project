@@ -3,10 +3,10 @@ from core.application import app
 from core.configreader import DataBaseConfig
 from core.managers.lang import LanguageManager
 from core.managers.logging import Log
-from core.mvc.controllers.main import MainController, PageController
+from core.mvc.controllers.main import MainController, PageController, FaviconController
 from defines import BASE_DIR
 
-controllers = {"main": MainController(), "page": PageController()}
+controllers = {"main": MainController(), "page": PageController(), "favicon": FaviconController()}
 database_config = DataBaseConfig()
 lm = LanguageManager()
 
@@ -23,3 +23,4 @@ app.add_url_rule(rule=f'/',
                  view_func=controllers["main"].as_view("main_view"))
 
 app.add_url_rule("/page", view_func=controllers["page"].as_view("page_view"))
+app.add_url_rule("/favicon.ico", view_func=controllers['favicon'].as_view("favicon_view"))

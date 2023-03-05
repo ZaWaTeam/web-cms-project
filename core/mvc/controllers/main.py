@@ -1,15 +1,23 @@
-from flask import render_template, request, abort
+from flask import render_template, request, abort, send_from_directory
 from flask.views import View
 
 from core.managers.controllers import ControllersManager
+from defines import BASE_DIR
 
+class FaviconController(View):
 
+    def dispatch_request(self):
+
+        # Template
+        return send_from_directory(f"{BASE_DIR}", 'favicon.ico')
 class MainController(View):
 
     def dispatch_request(self):
 
         # Template
         return ControllersManager.render_action(f"index.html")
+
+
 
 
 class PageController(View):

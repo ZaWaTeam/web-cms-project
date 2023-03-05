@@ -1,7 +1,9 @@
 from flask import send_from_directory
+
+from admin.mvc.controllers import dashboard, auth
 from core.application import admin
-from admin.mvc.controllers import dashboard, auth, plugins, settings, themes
 from defines import BASE_DIR
+
 # from core.configreader import DataBaseConfig
 
 controllers = {}
@@ -13,6 +15,7 @@ def admin_static_folder(filename):
 
 # Main url
 admin.add_url_rule("/", view_func=dashboard.MainView.as_view("MainDashboard"))
+
 
 # Login url
 admin.add_url_rule(
