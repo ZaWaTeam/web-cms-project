@@ -31,7 +31,7 @@
                     <h5>CPU usage</h5>
                     [[ getCPUPercentage ]]%
                     <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" :class="{ 'bg-danger': (geteCPUPercentage > 60) }" :style="{ 'width': `${geteCPUPercentage}%` }"></div>
+                        <div class="progress-bar" :class="{ 'bg-danger': (getCPUPercentage > 60) }" :style="{ 'width': `${getCPUPercentage}%` }"></div>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@ getCPUPercentage() {
             maintainAspectRatio: false,
             scales: {
                 y: {
-                    beginAtZero: true,
+                    beginAtZero: false,
                     max: 100
                 }
             }
