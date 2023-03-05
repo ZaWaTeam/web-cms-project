@@ -51,6 +51,6 @@ class LoginFormHandler(MethodView):
             self.username, self.password, redirect("/cpanel"))
 
         if not user_login:
-            return Response("Incorrect auth credentials")
+            return Response("Incorrect auth credentials", 401)
 
         return SecurityManager.permission_or_respond(PERMISSIONS.LOGIN_TO_PANEL, user_login, user_login)

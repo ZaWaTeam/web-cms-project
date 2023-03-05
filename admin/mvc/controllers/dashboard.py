@@ -3,6 +3,7 @@ from flask import render_template, request
 from admin.managers.security import SecurityManager
 from defines import PERMISSIONS
 from core.managers.auth import user
+import psutil
 
 
 class MainView(View):
@@ -19,10 +20,19 @@ class MainView(View):
 
     def dispatch_request(self):
 
+        memory = psutil.virtual_memory()
+        cpu = psutil.cpu_percent()
+        disk = psutil.disk_usage('/')
+
         context = {
             "title": "Dashboard | PyCMS",
             "user": self.user_manager.get_current_user(request),
-            "request": request
+            "request": request,
+            "sysinfo": {
+                "memory": memory.percent,
+                "cpu": cpu,
+                "disk": disk,
+            }
         }
 
         # Security
