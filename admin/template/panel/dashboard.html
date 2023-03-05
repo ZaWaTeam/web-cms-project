@@ -37,7 +37,10 @@
             </div>
         </div>
     </div>
-
+    <div class="chart">
+        <h3>CPU Usage History</h3>
+        <canvas id="cpuChart"></canvas>
+    </div>
 </div>
 
 {% endblock content %}
@@ -55,3 +58,53 @@ getCPUPercentage() {
 }
 
 {% endblock computeds %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Create chart
+    var cpuChart = new Chart(document.getElementById('cpuChart'), {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'CPU Usage',
+                data: [],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    // Update chart every 5 seconds
+    setInterval(function() {
+        // Get CPU usage from server
+        fetch('/cpanel/get_cpu_usage')
+        .then(response => response.json())
+        .then(data => {
+            // Add data to chart
+            cpuChart.data.labels.push(new Date().toLocaleTimeString());
+            cpuChart.data.datasets[0].data.push(data.cpu);
+            // Remove oldest data if chart has more than 10 data points
+            if (cpuChart.data.labels.length > 10) {
+                cpuChart.data.labels.shift();
+                cpuChart.data.datasets[0].data.shift();
+            }
+            // Update chart
+            cpuChart.update();
+        })
+        .catch(error => console.error(error));
+    }, 5000);
+</script>
+{% endblock scripts %}

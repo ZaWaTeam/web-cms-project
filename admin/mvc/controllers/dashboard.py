@@ -1,4 +1,6 @@
-from flask.views import View
+import json
+
+from flask.views import View, MethodView
 from flask import render_template, request
 from admin.managers.security import SecurityManager
 from defines import PERMISSIONS
@@ -37,3 +39,8 @@ class MainView(View):
 
         # Security
         return SecurityManager.permission_or_redirect(PERMISSIONS.LOGIN_TO_PANEL, "/cpanel/login", render_template("panel/dashboard.html", **context))
+
+class MemoryView(MethodView):
+    def dispatch_request(self):
+        cpu = psutil.cpu_percent()
+        return SecurityManager.permission_or_respond(PERMISSIONS.LOGIN_TO_PANEL, None, json.dumps({"cpu": cpu}))
