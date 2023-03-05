@@ -40,7 +40,11 @@ class MainView(View):
         # Security
         return SecurityManager.permission_or_redirect(PERMISSIONS.LOGIN_TO_PANEL, "/cpanel/login", render_template("panel/dashboard.html", **context))
 
-class MemoryView(MethodView):
+class CPUView(MethodView):
     def dispatch_request(self):
         cpu = psutil.cpu_percent()
         return SecurityManager.permission_or_respond(PERMISSIONS.LOGIN_TO_PANEL, None, json.dumps({"cpu": cpu}))
+class MemoryView(MethodView):
+    def dispatch_request(self):
+        memory = psutil.virtual_memory()
+        return SecurityManager.permission_or_respond(PERMISSIONS.LOGIN_TO_PANEL, None, json.dumps({"memory": memory.percent}))

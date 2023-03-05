@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CPU Usage Chart</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h4>CPU Usage History</h4>
+<canvas id="cpu-chart"></canvas>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Create initial chart data
+        let cpuData = [];
+        let labels = [];
+        const ctx = document.getElementById('cpu-chart').getContext('2d');
+        const cpuChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Usage (%)',
+                    data: cpuData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    fill: 'origin'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+
+                hover: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                animation: {
+                    duration: 10
+                }
+            }
+        });
+
+        // Update chart data every 5 seconds
+        setInterval(() => {
+            fetch('/cpanel/get_cpu_usage')
+                .then(response => response.json())
+                .then(data => {
+                    const cpuUsage = data.cpu;
+                    const currentTime = new Date().toLocaleTimeString();
+                    cpuData.push(cpuUsage);
+                    labels.push(currentTime);
+                    if (cpuData.length > 10) {
+                        cpuData.shift();
+                        labels.shift();
+                    }
+                    cpuChart.update();
+                })
+                .catch(error => console.error(error));
+        }, 5000);
+
+    });
+</script>
+</body>
+</html>

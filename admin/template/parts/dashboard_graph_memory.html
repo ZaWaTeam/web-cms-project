@@ -2,29 +2,30 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>CPU Usage Chart</title>
+    <title>Memory Usage Chart</title>
     <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<h4>CPU Usage History</h4>
-<canvas id="cpu-chart"></canvas>
+<h4>Memory Usage History</h4>
+<canvas id="memory-chart"></canvas>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Create initial chart data
-        let cpuData = [];
+        let memoryData = [];
         let labels = [];
-        const ctx = document.getElementById('cpu-chart').getContext('2d');
-        const cpuChart = new Chart(ctx, {
+        const ctx = document.getElementById('memory-chart').getContext('2d');
+        const memoryChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
                     label: 'Usage (%)',
-                    data: cpuData,
+                    data: memoryData,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
+                    borderWidth: 1,
+                    fill: 'origin'
                 }]
             },
             options: {
@@ -51,18 +52,18 @@
 
         // Update chart data every 5 seconds
         setInterval(() => {
-            fetch('/cpanel/get_cpu_usage')
+            fetch('/cpanel/get_memory_usage')
                 .then(response => response.json())
                 .then(data => {
-                    const cpuUsage = data.cpu;
+                    const memoryUsage = data.memory;
                     const currentTime = new Date().toLocaleTimeString();
-                    cpuData.push(cpuUsage);
+                    memoryData.push(memoryUsage);
                     labels.push(currentTime);
-                    if (cpuData.length > 10) {
-                        cpuData.shift();
+                    if (memoryData.length > 10) {
+                        memoryData.shift();
                         labels.shift();
                     }
-                    cpuChart.update();
+                    memoryChart.update();
                 })
                 .catch(error => console.error(error));
         }, 5000);
