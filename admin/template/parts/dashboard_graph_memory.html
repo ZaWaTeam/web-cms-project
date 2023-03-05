@@ -8,7 +8,9 @@
 </head>
 <body>
 <h4>Memory Usage History</h4>
-<canvas id="memory-chart"></canvas>
+<div id="chart-container">
+    <canvas id="memory-chart"></canvas>
+</div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Create initial chart data
@@ -46,7 +48,9 @@
                 },
                 animation: {
                     duration: 10
-                }
+                },
+                responsive: true,
+                maintainAspectRatio: false
             }
         });
 
@@ -66,9 +70,16 @@
                     memoryChart.update();
                 })
                 .catch(error => console.error(error));
-        }, 5000);
+        }, 1000);
 
     });
 </script>
+<style>
+    #chart-container {
+        width: 33%;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+</style>
 </body>
 </html>
