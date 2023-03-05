@@ -1,2 +1,7 @@
 {% extends 'tpl/index.html' %}
-asd
+{% block content %}
+
+{{ user.email }}
+{{ request.path }}
+
+{% endblock content %}
