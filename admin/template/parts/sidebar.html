@@ -11,9 +11,42 @@
                 <i :class="element.icon" class="me-2"></i>
                 [[ element.text ]]
             </a>
+            <ul v-if="element.folder" class="nav flex-column ml-3">
+                <template v-for="submodule in element.submodules">
+                    <li>
+                        <a :href="submodule.url" class="nav-link"
+                           :class="isActiveSidebar(submodule.url) ? `active` : `text-white`">
+                            <i :class="submodule.icon" class="me-2">&nbsp</i>
+                            [[ submodule.text ]]
+                        </a>
+                        <ul v-if="submodule.folder" class="nav flex-column ml-3">
+                            <template v-for="submodule2 in submodule.submodules">
+                                <li>
+                                    <a :href="submodule2.url" class="nav-link"
+                                       :class="isActiveSidebar(submodule2.url) ? `active` : `text-white`">
+                                        <i :class="submodule2.icon" class="me-2">&nbsp&nbsp&nbsp&nbsp</i>
+                                        [[ submodule2.text ]]
+                                    </a>
+                                    <ul v-if="submodule2.folder" class="nav flex-column ml-3">
+                                        <template v-for="submodule3 in submodule2.submodules">
+                                            <li>
+                                                <a :href="submodule3.url" class="nav-link"
+                                                   :class="isActiveSidebar(submodule3.url) ? `active` : `text-white`">
+                                                    <i :class="submodule3.icon" class="me-2"></i>
+                                                    [[ submodule3.text ]]
+                                                </a>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </li>
+                            </template>
+                        </ul>
+                    </li>
+                </template>
+            </ul>
         </li>
-
     </ul>
+
     <hr>
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
