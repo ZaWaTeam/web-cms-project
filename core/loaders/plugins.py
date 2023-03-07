@@ -3,6 +3,7 @@ from core.configreader import DataBaseConfig
 from importlib import import_module
 
 from core.managers.logging import Log
+from defines import BASE_DIR
 
 
 class PluginLoader():
@@ -18,12 +19,14 @@ class PluginLoader():
 
     def __plugin_list(self):
         # Plugin list
-        path = f"content/plugins"
+        self.__plugin_list = []
+        path = f"{BASE_DIR}/content/plugins"
         pluginlist = os.listdir(path=path)
 
         for index, item in enumerate(pluginlist):
             if os.path.isdir(path + "/" + item):
-                self.__plugins.append({"name": item, "path": path})
+                if os.path.exists(path + "/" + item + "/manifest.json"):
+                    self.__plugins.append({"name": item, "path": path})
 
     def __start_plugins(self):
         # Database
