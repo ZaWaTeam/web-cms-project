@@ -1,7 +1,10 @@
+from typing import Optional
+
+
 wrap = input
 
 
-def input(prompt: str = '', default=None) -> str:
+def input(prompt: str = '', default: Optional[str] = None) -> Optional[str]:
     """
     The input function is a wrapper for the built-in input function.
     It allows to set default result of input if user just presses enter
