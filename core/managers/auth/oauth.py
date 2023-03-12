@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from time import clock_getres
 from core.database.crud.users import UsersCrud
 from core.configparse import config
 
