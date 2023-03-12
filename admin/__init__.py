@@ -72,5 +72,5 @@ def load_panel():
     Panel includes own loaders and manager, which will be loaded with this function.
     All you need to do, call this magical function in `core/bootup.py` and everything is done.
     """
-    WebcmsAdmin.load_router("routes")
-    WebcmsAdmin.load_router("forms")
+    WebcmsAdmin.load_router("authentication")
+    WebcmsAdmin.load_router("dashboard")

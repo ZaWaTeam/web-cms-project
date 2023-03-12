@@ -66,6 +66,65 @@ class SessionsManager:
         # return response
         return response
 
+    def create_session(self, user_id: int, life_time: date):
+        """
+        The create_session function creates a new session for the user.
+        It takes in two parameters, user_id and life_time.
+        The function returns hashed token.
+
+        :param self: Access variables that belongs to the class
+        :param user_id:int: User that starts the session
+        :param life_time:date: Set the expiry date of the cookie
+        :return: The hashed session token
+        """
+        user = self.db.user_get(user_id)
+
+        if not user:
+            raise UserNotExists()
+
+        # Generate usertoken
+        token = str(randint(2200, 5000) + user_id)
+
+        # Generate hashed session token
+        if config.has_option("DEVELOPMENT", "HashTime"):
+            hashed_token = self.hasher.crypt(
+                token, complexity=config.getint("DEVELOPMENT", "HashTime"))
+        else:
+            hashed_token = self.hasher.crypt(token)
+        
+        # Get user information
+        device = request.user_agent
+        ip = request.remote_addr
+
+        # Store in database
+        save_session = self.db.create(
+            user=user_id, device=device, ip=ip, expires=life_time, token=hashed_token)
+
+        # Failed to store in database
+        if not save_session:
+            Log("Cannot store session! Exit code: SESSION_STORE_FAILED", 2)
+            return False
+
+        # return response
+        return hashed_token, life_time
+    
+    def close_session(self, token: str):
+        """
+        The close_session function is used to delete expired sessions from database
+        If there is expired session, it will be deleted immidiatley
+
+        :param self: Access variables that belongs to the class
+        :param token:str: Token of the deleting session
+        
+        :return: Void, it won't return anything. In this case, void is None
+        """
+        get_session = self.db.exists(token)
+
+        if not get_session:
+            return
+        
+        self.db.delete(token)
+
     def no_session_logout(self, token: str, redirect_on_logout: str = "/"):
         """
         The no_session_logout function is used to logout user.

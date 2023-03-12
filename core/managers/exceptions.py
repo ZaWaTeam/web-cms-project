@@ -49,6 +49,14 @@ class PermissionIsAlreadyExistsInDatabase(Exception):
 class UserNotExists(Exception):
     def __str__(self) -> str:
         return f"User not found!"
+    
+class UserCredsIncorrect(Exception):
+    def __str__(self) -> str:
+        return f"User authentication credentials are/is incorrect"
+
+class NotAuthenticated(Exception):
+    def __str__(self) -> str:
+        return f"User is not authenticated"
 
 
 class CoreHasDamage(Exception):

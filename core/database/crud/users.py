@@ -1,3 +1,4 @@
+from typing import Union
 from core.managers.exceptions import PermissionFollowIndexException
 from ..models.main import *
 
@@ -39,11 +40,11 @@ class UsersCrud:
         :return: The user with the id passed in as a parameter
         """
         query = UserModel.get_or_none(UserModel.id == id)
-
+        
         return query
 
     @classmethod
-    def user_verify(cls, username: str):
+    def user_verify(cls, username: str) -> Union[UserModel, None]:
         """
         The user_verify function is a class method that takes in a username and returns the user object if it exists.
 

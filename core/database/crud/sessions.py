@@ -1,3 +1,4 @@
+from typing import Union
 from ..models.main import *
 from . import users
 
@@ -22,7 +23,7 @@ class SessionsCRUD(users.UsersCrud):
         return query
 
     @classmethod
-    def get(cls, token: str):
+    def get(cls, token: str) -> Union[Sessions, None]:
         """
         The get function is a class method that takes in a token and returns the session object
         if it exists. If not, it returns None.
@@ -37,7 +38,7 @@ class SessionsCRUD(users.UsersCrud):
         return query
 
     @classmethod
-    def exists(cls, token: str):
+    def exists(cls, token: str) -> Union[Sessions, None]:
         """
         The function checks for session existing. If session not exists, it returns none.
 
@@ -48,3 +49,19 @@ class SessionsCRUD(users.UsersCrud):
         query = Sessions.get_or_none(Sessions.token == token)
 
         return query
+
+    @classmethod
+    def delete(cls, token: str) -> None:
+        """
+        The function checks if session exists, if exists it will delete it from db
+
+        :param cls: Refer to the current instance of the class in which the method is used
+        :param token:str: Get the token from the user
+        :return: Void, there is nothing to return. In python, void is None
+        """
+        exists = cls.exists(token)
+        if not exists:
+            return
+        
+        Sessions.delete_by_id(exists.id)
+        return

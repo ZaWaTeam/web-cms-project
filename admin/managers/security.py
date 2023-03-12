@@ -1,8 +1,19 @@
-from typing import Union
+from typing import Callable, Union
 
-from flask import redirect, request
-from core.managers.auth import user, permissions, groups
+from core.managers.auth import permissions, groups
+from core.managers.auth.oauth import OAuth2Manager
 
+class SecurityCallback:
+    def __init__(self, function: Callable, *args, **kwargs) -> None:
+        self.function = function
+        self.arguments = args
+        self.kwarguments = kwargs
+    
+    def call(self):
+        return self.function(*self.arguments, **self.kwarguments)
+    
+    def func_bound(self):
+        return self.function
 
 class SecurityManager:
     """
@@ -13,13 +24,14 @@ class SecurityManager:
     Call it where you need.
     This manager containes so much tools to work with security in callin just 1 method.
     """
-    user_manager = user.UserManagement()
+    # user_manager = user.UserManagement()
+    oauth2_manager = OAuth2Manager()
     permission_manager = permissions.PermissionsManagement()
     permission_handler = permissions.PermissionsControllerManager()
     group_manager = groups.GroupsManager()
 
-    @classmethod
-    def user_authenticated(cls):
+
+    def user_authenticated(self, token: str):
         """
         ## If user authenticated
 
@@ -28,52 +40,11 @@ class SecurityManager:
         Returns:
             bool: Boolean (True, False). Returns if user authenticated or not.
         """
-        user_info = cls.user_manager.is_authenticated(request)
+        user_info = self.oauth2_manager.is_authenticated(token)
 
-        return bool(user_info)
+        return user_info
 
-    @classmethod
-    def permission_or_redirect(cls, permission: Union[str, list], redirect_to: str, callback):
-        """
-        ## User has permission or redirect
-
-        If user have permissions, method will call `callback`.
-        If user don't have one of them or permission if it set to 1.
-        It will not let him go to control panel
-
-        Args:
-            permission (Union[str, list]): Permission. It can be 1, only one string. Or multiple,
-            if user don't have 1 of them. It will not let him go
-
-            redirect_to (str): Url pattern where user will be redirected if user don't have access.
-
-            callback: function or class which will be executed if user has permissions.
-
-        Returns:
-            bool(True): If user has access. 
-            redirect(str): If user has not access.
-        """
-        if not cls.user_authenticated():
-            return redirect(redirect_to)
-
-        if type(permission) == list:
-            perm_check = cls.permission_handler.has_permission(
-                cls.user_manager.get_current_user(request).id, permission)
-            if not perm_check:
-                return redirect(redirect_to)
-
-            return callback
-
-        perm_check = cls.permission_manager.check_permission(
-            permission, cls.user_manager.get_current_user(request).id)
-
-        if not perm_check:
-            return redirect(redirect_to)
-
-        return callback
-
-    @classmethod
-    def permission_or_respond(cls, permission: Union[str, list], respond, callback):
+    def permission_or_respond(self, token: str, permission: Union[str, list], respond: SecurityCallback, callback: str):
         """
         ## User has permission or else. It will respond from respond argument
 
@@ -93,52 +64,26 @@ class SecurityManager:
             bool(True): If user has access. 
             redirect(str): If user has not access.
         """
-        if not cls.user_authenticated():
-            return respond
+        if not self.user_authenticated(token):
+            return respond.call()
 
         if type(permission) == list:
-            perm_check = cls.permission_handler.has_permission(
-                cls.user_manager.get_current_user(request).id, permission)
+            perm_check = self.permission_handler.has_permission(
+                self.oauth2_manager.get_current_user(token).id, permission)
             if not perm_check:
-                return respond
+                return respond.call()
 
             return callback
 
-        perm_check = cls.permission_manager.check_permission(
-            permission, cls.user_manager.get_current_user(request).id)
+        perm_check = self.permission_manager.check_permission(
+            permission, self.oauth2_manager.get_current_user(token).id)
 
         if not perm_check:
-            return respond
+            return respond.call()
 
         return callback
 
-    @classmethod
-    def logged_or_redirect(cls, redirect_url: str, callback):
-        """
-        ## User authenticated, or else redirect
-
-        If user is authenticated. Method will execute argument `callback`
-        If user not authenticated. Method will redirect him to url which you will set in argument `redirect_url`
-        This method controlls authenticated user or not. And triggers 1 argument of 2 given
-
-        Args:
-            redirect_url (str): If user is not authenticated, method will redirect him to url passed in this argument
-            callback (any): You can pass here flask response methods. This argument will be executed if user is authenticated in system
-
-        Returns:
-            redirect_url (str): If user is not authenticated
-            callback (any): If user is authenticated in system
-        """
-
-        account = cls.user_authenticated()
-
-        if account:
-            return redirect(redirect_url)
-
-        return callback
-
-    @classmethod
-    def logged_or_respond(cls, respond_execute, callback):
+    def logged_or_respond(self, token: str, respond_execute: SecurityCallback, callback: str):
         """
         ## User authenticated, or else execute `respond_execute`
 
@@ -147,17 +92,13 @@ class SecurityManager:
         This method controlls authenticated user or not. And triggers 1 argument of 2 given
 
         Args:
-            respond_execute (str): If user is not authenticated, method will redirect him to url passed in this argument
-            callback (any): You can pass here flask response methods. This argument will be executed if user is authenticated in system
-
-        Returns:
-            respond_execute (str): If user is not authenticated
-            callback (any): If user is authenticated in system
+            respond_execute (SecurityCallback): If user is not authenticated, method will call passed callback function
+            callback (SecurityCallback): You can pass here flask response methods. This argument will be executed if user is authenticated in system
         """
 
-        account = cls.user_authenticated()
-
+        account = self.user_authenticated(token)
+        
         if account:
-            return respond_execute
-
-        return callback
+            return callback
+        
+        return respond_execute.call()

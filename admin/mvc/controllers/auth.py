@@ -1,56 +1,101 @@
-from flask.views import View, MethodView
-from flask import Response, redirect, render_template, request
-from admin.managers.security import SecurityManager
-from core.managers.auth import user
+from flask import request
+from flask_restful import Resource, abort
+from admin.managers.security import SecurityManager, SecurityCallback
+from core.managers.auth.oauth import OAuth2Manager
+from core.managers.exceptions import NotAuthenticated, UserCredsIncorrect, UserNotExists
+from core.utils.auth import get_token, has_token
 from defines import PERMISSIONS
+from playhouse.shortcuts import model_to_dict
+
+class AuthenticationProvider(Resource):
+    
+    def __init__(self) -> None:
+        super().__init__()
+        self.manager = OAuth2Manager()
+        self.security = SecurityManager()
+        self.SCB = SecurityCallback
+    
+    def post(self):
+        username = request.form["username"]
+        password = request.form["password"]
+
+        try:
+            token, lifetime = self.manager.authenticate(username, password)
+
+        except UserNotExists:
+            abort(403, message="Incorrect authentication credentials")
+        
+        except UserCredsIncorrect:
+            abort(403, message="Incorrect authentication credentials")
+        
+        return {
+            "access_token": token,
+            "type": "Bearer",
+            "expires_in": lifetime
+        }, 201
+
+class UserInfoScopeProvider(Resource):
+    def __init__(self) -> None:
+        super().__init__()
+        self.manager = OAuth2Manager()
+        self.security = SecurityManager()
+        self.SCB = SecurityCallback
+    
+    def get(self):
+        if not has_token(request.headers):
+            abort(401, message="Unauthorized")
+        
+        token = get_token(request.headers)
+
+        try:
+            user = self.manager.get_current_user(token)
+        
+        except NotAuthenticated:
+            abort(401, message="Unauthorized")
+
+        # Converted response model
+        response_model = model_to_dict(user)
+
+        # Removed user password for security purposes
+        del response_model["password"]
+
+        return response_model, 200
+    
+    def patch(self):
+        if not has_token(request.headers):
+            abort(401, message="Unauthorized")
+        
+        token = get_token(request.headers)
+
+        user = self.manager.update_current_user(token, **request.form)
+        
+        # Converted response model
+        response_model = model_to_dict(user)
+
+        # Removed user password for security purposes
+        del response_model["password"]
+
+        return response_model, 201
 
 
-class LoginAuthView(View):
-    """
-    ## Auth views
-
-    LoginView. Will dispatch requests going to admin login route.
-    This view will render admin login form and authenticate user.
-
-    Args:
-        View (flask.views): This is interface class. Which containes some functions which can be used in parsing view
-    """
-
-    def dispatch_request(self):
-
-        return render_template("auth/login.html")
-
-
-class LoginFormHandler(MethodView):
-    """
-    ## Auth method views
-
-    LoginFomrHandler. This class taking important role to handle POST login requests.
-    This controller will controll handle requests and prop. Checks, if user don't have permissions.
-    It will redirect him to main page or access denied page, if theme designer added this page.
-
-    Args:
-        MethodView (flask.views): MethodView gives possibility to handle GET, POST, PUT, DELETE requests or more shorter: request handler 
-    """
-    username: str
-    password: str
-    user_manager = user.UserManagement()
+class AuthenticationLogoutProvider(Resource):
+    def __init__(self) -> None:
+        super().__init__()
+        self.manager = OAuth2Manager()
+        self.security = SecurityManager()
+        self.SCB = SecurityCallback
 
     def post(self):
+        if not has_token(request.headers):
+            abort(401, message="Unauthorized")
+        
+        # Getting parsed token
+        token = get_token(request.headers)
 
-        self.username = request.form.get("username")
-        self.password = request.form.get("password")
-
-        handler = self.login_handle()
-
-        return handler
-
-    def login_handle(self):
-
-        user_login = self.user_manager.authenticate_user(
-            self.username, self.password, redirect("/cpanel"))
-
-        if not user_login:
-            return Response("Incorrect auth credentials")
-
-        return SecurityManager.permission_or_respond(PERMISSIONS.LOGIN_TO_PANEL, user_login, user_login)
+        try:
+            self.manager.user_logout(token)
+        
+        except NotAuthenticated:
+            abort(401, "Unauthorized")
+        
+        return True, 201

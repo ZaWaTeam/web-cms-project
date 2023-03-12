@@ -1,4 +1,5 @@
-from flask import Blueprint, Flask
+from flask import Flask
+from flask_restful import Api
 
 from core.configreader import DataBaseConfig
 from defines import BASE_DIR
@@ -10,8 +11,6 @@ main_template = config.get_config("active_template")
 app = Flask(__name__, template_folder=f"{BASE_DIR}/content/theme/{main_template}",
             static_folder=f"{BASE_DIR}/content/theme")
 
-# Admin blueprint
-admin = Blueprint("cpanel",
-                  __name__, template_folder=f"{BASE_DIR}/admin/template", static_folder=f"{BASE_DIR}/admin/template/assets", url_prefix="/cpanel")
+api = Api(app, "/api/admin")
 
-# Registering admin blueprint
+# Registering admin RestAPI Endpoint
