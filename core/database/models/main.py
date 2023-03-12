@@ -1,11 +1,8 @@
 import peewee as pw
 from core.database.connect import CpDb
-from core.plugins.model import ModelController
 
 
 # Configuration database
-
-
 class Configuration(pw.Model):
     name = pw.CharField()
     value = pw.TextField()
@@ -122,4 +119,3 @@ class Logs(pw.Model):
 base_models = [Configuration, Editables, Groups,
                UserModel, Sessions, Permissions, Logs]
 
-CpDb.create_tables(base_models)
