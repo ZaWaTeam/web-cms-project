@@ -1,5 +1,6 @@
 # Full structure is in https://python-webcms.readthedocs.io/en/latest/
 
+
 # Structure
 ![scheme.drawio.svg](scheme.drawio.svg)
 
