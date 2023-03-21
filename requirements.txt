@@ -44,7 +44,7 @@ sphinxcontrib-serializinghtml==1.1.5
 toml==0.10.2
 typer==0.4.1
 urllib3==1.26.9
-watchdog==2.1.8
+watchdog==3.0.0
 Werkzeug==2.2.3
 zipp==3.8.0
 Faker==17.5.0
