@@ -1,5 +1,7 @@
+from core.managers.plugins import PluginGeneric
 from core.configreader import DataBaseConfig
 from core.managers.logging import Log
+from core.theme_app import Application, app
 
 """
 Initialized plugin. This functionality file will work with them only
@@ -32,6 +34,42 @@ def admin_page_loaded():
 Classes
 """
 
+class ApplicationManagement():
+    """
+    Manage theme global variable application.
+    --------------------------------------
+
+    Plugin developer can create any type of variable on application
+    Also he can manage already existing variables.
+    Be careful when using this, you can break CMS.
+    """
+    application: Application
+    def __init__(self, plugin: PluginGeneric) -> None:
+        self.plugin = plugin
+        self.application = app.jinja_env.globals.get("application", None)
+    
+    def set_variable(self, name: str, value) -> None:
+        """
+        Setting external variable.
+        Note: We recommend use your plugin prefix in variable name to prevent rewriting system variables
+
+        Args:
+            name (str): Name of new variable
+            value (any): Value of new variable
+        """
+        setattr(self.application, name, value)
+    
+    def get_variable(self, name: str):
+        """
+        It will get existing variable
+        Will return None if there not found
+
+        Args:
+            name (str): Name of variable
+        """
+        variable = getattr(self.application, name, None)
+
+        return variable
 
 # Debug logger
 class Debug():
