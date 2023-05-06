@@ -161,8 +161,8 @@ class CLIResponses():
             table.add_column("Keywords", style="cyan")
 
             # Adding rows
-            table.add_row(read_plugin.name, read_plugin.description,
-                          ",".join(read_plugin.meta))
+            table.add_row(read_plugin["name"], read_plugin["description"],
+                          ",".join(read_plugin["meta"]))
 
             print(table)
             return table
