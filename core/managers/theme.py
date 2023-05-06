@@ -1,3 +1,4 @@
+from typing import Optional
 from core.managers.editables import EditableManagers
 from core.managers.logging import Log
 
@@ -79,7 +80,7 @@ class ThemeManager():
         """
         self.__editables.set_editable(name, value, index)
 
-    def load_css(self, src: str = None, url: str = None):
+    def load_css(self, src: Optional[str] = None, url: str = None):
         """
         Sets css data to static
         -
@@ -97,7 +98,7 @@ class ThemeManager():
 
         self.style_static.append(src)
 
-    def load_script(self, src: str, url: str = None):
+    def load_script(self, src: Optional[str] = None, url: str = None):
         """
         Sets js data to static
         -
