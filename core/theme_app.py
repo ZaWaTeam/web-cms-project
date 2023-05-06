@@ -101,7 +101,7 @@ class Application():
         # Url styles
         for url in static_objects["url_script"]:
             static_string = static_string + \
-                f" <link rel=\"stylesheet\" href=\"{url}\">\n"
+                f" <script src=\"{url}\"></script>\n"
 
         return static_string
 
