@@ -1,6 +1,8 @@
-from typing import Optional
 from core.managers.editables import EditableManagers
-from core.managers.logging import Log
+from typing import Callable, Literal, Optional
+from core.application import storage
+from core.stores.hooks import Hook, HookStore
+from defines import ACTIONS
 
 
 class ThemeManager():
@@ -116,3 +118,27 @@ class ThemeManager():
 
         exec = self.script_static.append(src)
         return exec
+
+    def add_action(self, name: str, method: Callable):
+        """
+        Adds hook action
+        Action hooks store method inside they self and execute that at the time which was described at the name of hook
+
+        Args:
+            name (str): Action hook type
+            method (function): Method which will be executed
+        """
+        if name not in ACTIONS:
+            raise
+
+        hooks: HookStore = storage.dispatch("hooks")
+        if not hooks:
+            raise
+
+        # Adding a hook
+        hook = Hook(name, "action", method)
+
+        hooks.add_hook(hook)
+
+        # Saving storage
+        hooks.save()
