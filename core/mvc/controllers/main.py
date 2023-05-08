@@ -2,14 +2,15 @@ from flask import render_template, request, abort
 from flask.views import View
 
 from core.managers.controllers import ControllersManager
+from core.managers.posts import PostsManager
 
 
 class MainController(View):
 
     def dispatch_request(self):
-
+        posts = PostsManager()
         # Template
-        return ControllersManager.render_action(f"index.html")
+        return ControllersManager.render_action(f"index.html", posts=posts)
 
 
 class PageController(View):
@@ -34,7 +35,8 @@ class PageController(View):
 
 class PostController(View):
 
-    def dispatch_request(self, category, post):
+    def dispatch_request(self, post_slug: str):
+        
         return render_template(f"contents/post.html")
 
 

@@ -1,11 +1,14 @@
 import importlib
 
-from admin import load_panel
 from core.loaders.permissions import PermissionsLoader
-from core.loaders.plugins import PluginLoader
-from core.managers.lang import LanguageManager
 from core.managers.logging import LoggingManager, Log
+from core.stores.hooks import HookStore
 from extentions.cli.responses import CLIResponses
+from core.managers.lang import LanguageManager
+from core.loaders.plugins import PluginLoader
+from core.application import storage
+
+from admin import load_panel
 
 lm = LanguageManager()
 log_manager = LoggingManager()
@@ -96,6 +99,9 @@ def boot_up():
     plugins = PluginLoader()
 
     plugins.initialize_plugins()
+    
+    # Storage
+    storage.add("hooks", HookStore)
 
     # Load Control Panel
     load_panel()
