@@ -74,3 +74,4 @@ def load_panel():
     """
     WebcmsAdmin.load_router("authentication")
     WebcmsAdmin.load_router("dashboard")
+    WebcmsAdmin.load_router("groups")
