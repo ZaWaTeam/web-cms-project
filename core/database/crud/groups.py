@@ -36,6 +36,18 @@ class GroupsCrud:
         return query
 
     @classmethod
+    def get_groups(cls):
+        """
+        The Get Groups function will get all available groups from the database.
+
+
+        :param cls: Refer to the class itself
+        :return: List[Groups] success of operation
+        """
+        query = Groups.select()
+        return query
+
+    @classmethod
     def edit_name(cls, new_name: str, group_id: int):
         """
         This function changes the name of group to new_name

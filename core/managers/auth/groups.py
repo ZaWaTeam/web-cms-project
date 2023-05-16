@@ -56,3 +56,18 @@ class GroupsManager:
         :return: The group object with the given id
         """
         return GroupsCrud.get_group(group_id)
+
+    @classmethod
+    def get_groups(cls):
+        """
+        The get_group function is a class method that takes an integer group_id as its only argument.
+        It returns the Group object with that id from the database, or raises a NoResultFound exception if there is no such group.
+
+
+        :param cls: Refer to the class itself, rather than an instance of the class
+        :param group_id:int: Specify the id of the group that is to be returned
+        :return: The group object with the given id
+        """
+        return GroupsCrud.get_groups()
+    
+    
