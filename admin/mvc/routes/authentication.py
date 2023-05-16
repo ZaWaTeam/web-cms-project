@@ -1,7 +1,5 @@
-from flask import send_from_directory
 from core.application import api
 from admin.mvc.controllers import auth
-from defines import BASE_DIR
 # from core.configreader import DataBaseConfig
 
 # Login url
