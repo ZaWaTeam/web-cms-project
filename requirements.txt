@@ -2,7 +2,7 @@ alabaster==0.7.13
 autopep8==2.0.2
 Babel==2.10.1
 bcrypt==3.2.2
-certifi==2022.12.7
+certifi==2023.7.22
 cffi==1.15.0
 charset-normalizer==2.1.0
 click==8.1.3
@@ -24,7 +24,7 @@ packaging==23.0
 peewee==3.14.10
 pycodestyle==2.8.0
 pycparser==2.21
-Pygments==2.12.0
+Pygments==2.15.0
 PyMySQL==1.0.2
 pyparsing==3.0.9
 python-dateutil==2.8.2
@@ -45,8 +45,9 @@ toml==0.10.2
 typer==0.4.1
 urllib3==1.26.9
 watchdog==2.1.8
-Werkzeug==2.2.3
+Werkzeug==2.3.8
 zipp==3.8.0
 Faker==17.5.0
 python-i18n[YAML]==0.3.9
 googletrans==4.0.0-rc1
+httpx>=0.23.0 # not directly required, pinned by Snyk to avoid a vulnerability
