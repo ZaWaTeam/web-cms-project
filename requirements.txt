@@ -32,7 +32,7 @@ pytz==2022.1
 PyYAML==6.0
 pyyaml_env_tag==0.1
 requests
-rich==12.4.4
+rich==13.7.1
 six==1.16.0
 snowballstemmer==2.2.0
 sphinxcontrib-applehelp==1.0.2
