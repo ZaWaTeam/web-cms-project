@@ -36,7 +36,7 @@ rich==12.4.4
 six==1.16.0
 snowballstemmer==2.2.0
 sphinxcontrib-applehelp==1.0.2
-sphinxcontrib-devhelp==1.0.2
+sphinxcontrib-devhelp==2.0.0
 sphinxcontrib-htmlhelp==2.0.0
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.3
